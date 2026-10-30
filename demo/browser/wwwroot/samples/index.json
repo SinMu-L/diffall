@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ppt-budget",
+    "format": "pptx",
+    "title": "\u9884\u7B97\u6C47\u62A5\u4FEE\u8BA2",
+    "subtitle": "\u6587\u5B57\u3001\u4F4D\u7F6E\u3001\u8868\u683C\u3001\u589E\u5220\u4E0E\u8C03\u5E8F",
+    "countLabel": "PPT",
+    "icon": "presentation"
+  },
+  {
+    "id": "excel-budget",
+    "format": "xlsx",
+    "title": "\u90E8\u95E8\u9884\u7B97\u8C03\u6574",
+    "subtitle": "\u63D2\u884C\u540E\u7684\u6570\u503C\u3001\u516C\u5F0F\u4E0E\u6837\u5F0F",
+    "countLabel": "Excel",
+    "icon": "table"
+  },
+  {
+    "id": "word-budget",
+    "format": "docx",
+    "title": "\u9884\u7B97\u8BF4\u660E\u4FEE\u8BA2",
+    "subtitle": "\u6BB5\u843D\u6587\u5B57\u3001\u52A0\u7C97\u4E0E\u5185\u5BB9\u65B0\u589E",
+    "countLabel": "Word",
+    "icon": "document"
+  }
+]

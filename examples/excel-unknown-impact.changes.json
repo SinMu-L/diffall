@@ -1,0 +1,312 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "excel-unknown-impact",
+  "format": "xlsx",
+  "documents": {
+    "before": {
+      "name": "synthetic-old.xlsx",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "after": {
+      "name": "synthetic-new.xlsx",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  "comparison": {
+    "profile": "office-semantic-v1",
+    "aspects": [
+      "existence",
+      "value",
+      "formula",
+      "style"
+    ],
+    "compareCachedFormulaValues": false
+  },
+  "coverage": {
+    "status": "complete",
+    "issues": []
+  },
+  "changes": [
+    {
+      "id": "change-A5",
+      "operation": "update",
+      "aspect": "value",
+      "target": {
+        "entityId": "A5",
+        "kind": "cell",
+        "label": "A5"
+      },
+      "property": "/value",
+      "before": {
+        "value": {
+          "type": "number",
+          "data": "10"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "A5"
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "number",
+          "data": "20"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "A5"
+          }
+        }
+      },
+      "match": {
+        "method": "manual",
+        "confidence": 1,
+        "evidence": [
+          "Synthetic example identity; no Office file is supplied."
+        ]
+      }
+    }
+  ],
+  "extensions": {
+    "ppt2wiki.impact": {
+      "version": "1.0.0",
+      "scope": {
+        "entityIds": [
+          "sheet",
+          "A5",
+          "B1"
+        ],
+        "mechanisms": [
+          "formula"
+        ]
+      },
+      "entities": [
+        {
+          "entityId": "sheet",
+          "kind": "sheet",
+          "label": "sheet",
+          "before": {
+            "source": {
+              "part": "/xl/worksheets/sheet1.xml",
+              "locator": {
+                "type": "excel",
+                "sheetId": 1
+              }
+            },
+            "observations": []
+          },
+          "after": {
+            "source": {
+              "part": "/xl/worksheets/sheet1.xml",
+              "locator": {
+                "type": "excel",
+                "sheetId": 1
+              }
+            },
+            "observations": []
+          }
+        },
+        {
+          "entityId": "A5",
+          "kind": "cell",
+          "label": "A5",
+          "before": {
+            "source": {
+              "part": "/xl/worksheets/sheet1.xml",
+              "locator": {
+                "type": "excel",
+                "sheetId": 1,
+                "address": "A5"
+              }
+            },
+            "observations": [
+              {
+                "property": "/value",
+                "status": "known",
+                "origin": "literal",
+                "freshness": "notApplicable",
+                "value": {
+                  "type": "number",
+                  "data": "10"
+                }
+              }
+            ]
+          },
+          "after": {
+            "source": {
+              "part": "/xl/worksheets/sheet1.xml",
+              "locator": {
+                "type": "excel",
+                "sheetId": 1,
+                "address": "A5"
+              }
+            },
+            "observations": [
+              {
+                "property": "/value",
+                "status": "known",
+                "origin": "literal",
+                "freshness": "notApplicable",
+                "value": {
+                  "type": "number",
+                  "data": "20"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "entityId": "B1",
+          "kind": "cell",
+          "label": "B1",
+          "before": {
+            "source": {
+              "part": "/xl/worksheets/sheet1.xml",
+              "locator": {
+                "type": "excel",
+                "sheetId": 1,
+                "address": "B1"
+              }
+            },
+            "observations": [
+              {
+                "property": "/value",
+                "status": "unavailable",
+                "origin": "storedCache",
+                "freshness": "unverified"
+              }
+            ],
+            "formula": "CUSTOM(A5)"
+          },
+          "after": {
+            "source": {
+              "part": "/xl/worksheets/sheet1.xml",
+              "locator": {
+                "type": "excel",
+                "sheetId": 1,
+                "address": "B1"
+              }
+            },
+            "observations": [
+              {
+                "property": "/value",
+                "status": "unavailable",
+                "origin": "storedCache",
+                "freshness": "unverified"
+              }
+            ],
+            "formula": "CUSTOM(A5)"
+          }
+        }
+      ],
+      "dependencies": [
+        {
+          "id": "dynamic-to-B",
+          "dependentEntityId": "B1",
+          "before": {
+            "kind": "dynamic",
+            "expression": "CUSTOM(A5)",
+            "resolution": "partial",
+            "members": [
+              "A5"
+            ]
+          },
+          "after": {
+            "kind": "dynamic",
+            "expression": "CUSTOM(A5)",
+            "resolution": "partial",
+            "members": [
+              "A5"
+            ]
+          }
+        }
+      ],
+      "computations": [],
+      "impacts": [
+        {
+          "id": "impact-B",
+          "mechanism": "formula",
+          "entityId": "B1",
+          "property": "/value",
+          "outcome": "unknown",
+          "changeIds": [],
+          "causes": [
+            {
+              "kind": "change",
+              "changeId": "change-A5",
+              "dependencyIds": [
+                "dynamic-to-B"
+              ]
+            }
+          ],
+          "evidence": {
+            "level": "potential",
+            "method": "staticAnalysis",
+            "detail": "CUSTOM is an illustrative unsupported function; no execution or causal claim.",
+            "computationIds": []
+          }
+        }
+      ],
+      "lineages": [],
+      "coverage": {
+        "dependencies": {
+          "status": "partial",
+          "issues": [
+            {
+              "code": "unsupportedReference",
+              "detail": "Synthetic coverage example.",
+              "entityIds": [
+                "B1"
+              ]
+            }
+          ]
+        },
+        "attribution": {
+          "status": "partial",
+          "issues": [
+            {
+              "code": "unverifiedCause",
+              "detail": "Synthetic coverage example.",
+              "entityIds": [
+                "B1"
+              ]
+            }
+          ]
+        },
+        "computation": {
+          "status": "partial",
+          "issues": [
+            {
+              "code": "unavailableResult",
+              "detail": "Synthetic coverage example.",
+              "entityIds": [
+                "B1"
+              ]
+            }
+          ]
+        },
+        "structure": {
+          "status": "notRequested",
+          "issues": []
+        }
+      },
+      "delivery": {
+        "status": "complete",
+        "omitted": {
+          "entities": 0,
+          "dependencies": 0,
+          "computations": 0,
+          "impacts": 0,
+          "lineages": 0
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "excel-budget-example",
+  "format": "xlsx",
+  "documents": {
+    "before": { "name": "预算旧版.xlsx", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" },
+    "after": { "name": "预算新版.xlsx", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" }
+  },
+  "comparison": { "profile": "office-semantic-v1", "aspects": ["value", "formula", "style"], "compareCachedFormulaValues": false },
+  "coverage": { "status": "complete", "issues": [] },
+  "changes": [
+    {
+      "id": "excel-001",
+      "operation": "update",
+      "aspect": "value",
+      "target": { "entityId": "rd-q2", "kind": "cell", "label": "预算表 / 研发部 / Q2预算" },
+      "property": "/value",
+      "before": {
+        "value": { "type": "number", "data": "1200000" },
+        "source": { "part": "/xl/worksheets/sheet1.xml", "locator": { "type": "excel", "sheetId": 1, "address": "C3" } }
+      },
+      "after": {
+        "value": { "type": "number", "data": "1500000" },
+        "source": { "part": "/xl/worksheets/sheet1.xml", "locator": { "type": "excel", "sheetId": 1, "address": "C4" } }
+      },
+      "match": { "method": "composite", "confidence": 0.99, "evidence": ["行键为研发部", "列键为Q2预算", "新版插行后地址为C4"] }
+    },
+    {
+      "id": "excel-002",
+      "operation": "update",
+      "aspect": "style",
+      "target": { "entityId": "rd-q2", "kind": "cell", "label": "预算表 / 研发部 / Q2预算" },
+      "property": "/style/font/bold",
+      "before": {
+        "value": { "type": "boolean", "data": false },
+        "source": { "part": "/xl/worksheets/sheet1.xml", "locator": { "type": "excel", "sheetId": 1, "address": "C3" } }
+      },
+      "after": {
+        "value": { "type": "boolean", "data": true },
+        "source": { "part": "/xl/worksheets/sheet1.xml", "locator": { "type": "excel", "sheetId": 1, "address": "C4" } }
+      },
+      "match": { "method": "composite", "confidence": 0.99, "evidence": ["复用研发部Q2预算单元格的匹配结果"] }
+    },
+    {
+      "id": "excel-003",
+      "operation": "update",
+      "aspect": "formula",
+      "target": { "entityId": "rd-total", "kind": "cell", "label": "预算表 / 研发部 / 年度预算公式" },
+      "property": "/formula",
+      "before": {
+        "value": { "type": "text", "data": "SUM(B3:C3)" },
+        "source": { "part": "/xl/worksheets/sheet1.xml", "locator": { "type": "excel", "sheetId": 1, "address": "E3" } }
+      },
+      "after": {
+        "value": { "type": "text", "data": "SUM(B4:D4)" },
+        "source": { "part": "/xl/worksheets/sheet1.xml", "locator": { "type": "excel", "sheetId": 1, "address": "E4" } }
+      },
+      "match": { "method": "composite", "confidence": 0.99, "evidence": ["行键为研发部", "列键为年度预算"] }
+    },
+    {
+      "id": "excel-004",
+      "operation": "update",
+      "aspect": "value",
+      "target": { "entityId": "rd-note", "kind": "cell", "label": "预算表 / 研发部 / 备注" },
+      "property": "/value",
+      "before": {
+        "value": { "type": "null", "data": null },
+        "source": { "part": "/xl/worksheets/sheet1.xml", "locator": { "type": "excel", "sheetId": 1, "address": "F3" } }
+      },
+      "after": {
+        "value": { "type": "text", "data": "" },
+        "source": { "part": "/xl/worksheets/sheet1.xml", "locator": { "type": "excel", "sheetId": 1, "address": "F4" } }
+      },
+      "match": { "method": "composite", "confidence": 0.99, "evidence": ["行键为研发部", "列键为备注"] }
+    }
+  ]
+}

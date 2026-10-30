@@ -1,0 +1,45 @@
+# Keep these rules when demo is used as a standalone Git repository.
+
+# Installed dependencies and local tools
+node_modules/
+.tools/
+.pnpm-store/
+.venv/
+venv/
+
+# Build output and generated delivery/test artifacts
+dist/
+out/
+artifacts/
+bin/
+obj/
+coverage/
+*.tsbuildinfo
+
+# Caches
+.cache/
+.npm/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local deployment bindings
+.vercel/
+.openai/
+
+# Local environment settings; keep example configuration
+.env*
+!.env.example
+!.env.*.example
+
+# Logs, editor temporary files and OS metadata
+*.log
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini

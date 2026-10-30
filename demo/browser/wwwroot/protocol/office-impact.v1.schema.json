@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ppt2wiki:office-impact:1.0.0",
+  "title": "ppt2wiki.impact v1",
+  "description": "Snapshot-local dependencies, impact assessments and their evidence. Does not replace core Change observations or prove causality by itself.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "scope", "entities", "dependencies", "computations", "impacts", "lineages", "coverage", "delivery"],
+  "properties": {
+    "version": { "const": "1.0.0" },
+    "scope": {
+      "type": "object", "additionalProperties": false,
+      "required": ["entityIds", "mechanisms"],
+      "properties": {
+        "entityIds": { "$ref": "#/$defs/ids" },
+        "mechanisms": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/mechanism" } }
+      }
+    },
+    "entities": { "type": "array", "items": { "$ref": "#/$defs/entity" } },
+    "dependencies": { "type": "array", "items": { "$ref": "#/$defs/dependency" } },
+    "computations": { "type": "array", "items": { "$ref": "#/$defs/computation" } },
+    "impacts": { "type": "array", "items": { "$ref": "#/$defs/impact" } },
+    "lineages": { "type": "array", "items": { "$ref": "#/$defs/lineage" } },
+    "coverage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["dependencies", "attribution", "computation", "structure"],
+      "properties": {
+        "dependencies": { "$ref": "#/$defs/coverage" },
+        "attribution": { "$ref": "#/$defs/coverage" },
+        "computation": { "$ref": "#/$defs/coverage" },
+        "structure": { "$ref": "#/$defs/coverage" }
+      }
+    },
+    "delivery": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "omitted"],
+      "properties": {
+        "status": { "enum": ["complete", "truncated"] },
+        "omitted": {
+          "type": "object", "additionalProperties": false,
+          "required": ["entities", "dependencies", "computations", "impacts", "lineages"],
+          "properties": {
+            "entities": { "type": "integer", "minimum": 0 },
+            "dependencies": { "type": "integer", "minimum": 0 },
+            "computations": { "type": "integer", "minimum": 0 },
+            "impacts": { "type": "integer", "minimum": 0 },
+            "lineages": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1 },
+    "ids": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+    "nonemptyIds": { "allOf": [{ "$ref": "#/$defs/ids" }], "minItems": 1 },
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "mechanism": { "enum": ["formula", "field", "chart", "styleInheritance", "layout", "externalRefresh"] },
+    "property": { "type": "string", "pattern": "^/(?:[^~/]|~[01])*(?:/(?:[^~/]|~[01])*)*$" },
+    "source": { "$ref": "urn:ppt2wiki:office-change:1.0.0#/$defs/source" },
+    "value": { "$ref": "urn:ppt2wiki:office-change:1.0.0#/$defs/value" },
+    "typedProperty": {
+      "allOf": [
+        { "if": { "properties": { "property": { "const": "/value" } }, "required": ["property"] }, "then": { "properties": { "value": { "properties": { "type": { "enum": ["text", "number", "boolean", "null", "error"] } } } } } },
+        { "if": { "properties": { "property": { "const": "/formula" } }, "required": ["property"] }, "then": { "properties": { "value": { "properties": { "type": { "enum": ["text", "null"] } } } } } },
+        { "if": { "properties": { "property": { "const": "/geometry" } }, "required": ["property"] }, "then": { "properties": { "value": { "properties": { "type": { "const": "object" }, "data": { "$ref": "urn:ppt2wiki:office-change:1.0.0#/$defs/geometry" } } } } } }
+      ]
+    },
+    "observation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["property", "status", "origin", "freshness"],
+      "properties": {
+        "property": { "$ref": "#/$defs/property" },
+        "status": { "enum": ["known", "unavailable"] },
+        "origin": { "enum": ["literal", "storedCache", "recalculated", "rendered"] },
+        "freshness": { "enum": ["verified", "unverified", "stale", "notApplicable"] },
+        "value": { "$ref": "#/$defs/value" },
+        "computationId": { "$ref": "#/$defs/id" }
+      },
+      "allOf": [
+        { "$ref": "#/$defs/typedProperty" },
+        { "if": { "properties": { "status": { "const": "known" } } }, "then": { "required": ["value"] }, "else": { "not": { "required": ["value"] } } },
+        { "if": { "properties": { "origin": { "enum": ["recalculated", "rendered"] } } }, "then": { "required": ["computationId"] } }
+      ]
+    },
+    "entityState": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source", "observations"],
+      "properties": {
+        "source": { "$ref": "#/$defs/source" },
+        "formula": { "type": ["string", "null"], "minLength": 1, "pattern": "^[^=]" },
+        "display": { "type": "string" },
+        "observations": { "type": "array", "items": { "$ref": "#/$defs/observation" } }
+      }
+    },
+    "entity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["entityId", "kind", "label", "before", "after"],
+      "properties": {
+        "entityId": { "$ref": "#/$defs/id" },
+        "kind": { "$ref": "urn:ppt2wiki:office-change:1.0.0#/$defs/target/properties/kind" },
+        "label": { "type": "string", "minLength": 1 },
+        "before": { "anyOf": [{ "type": "null" }, { "$ref": "#/$defs/entityState" }] },
+        "after": { "anyOf": [{ "type": "null" }, { "$ref": "#/$defs/entityState" }] }
+      }
+    },
+    "area": {
+      "type": "object", "additionalProperties": false,
+      "required": ["sheetEntityId", "start", "end"],
+      "properties": {
+        "sheetEntityId": { "$ref": "#/$defs/id" },
+        "start": { "type": "string", "pattern": "^[A-Z]{1,3}[1-9][0-9]{0,6}$" },
+        "end": { "type": "string", "pattern": "^[A-Z]{1,3}[1-9][0-9]{0,6}$" }
+      }
+    },
+    "reference": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "expression", "resolution", "members"],
+      "properties": {
+        "kind": { "enum": ["cell", "range", "name", "table", "dynamic", "external", "object", "environment"] },
+        "expression": { "type": "string", "minLength": 1 },
+        "resolution": { "enum": ["resolved", "partial", "unresolved"] },
+        "members": { "$ref": "#/$defs/ids" },
+        "areas": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/area" } },
+        "external": { "$ref": "#/$defs/environment" }
+      },
+      "allOf": [
+        { "if": { "properties": { "kind": { "const": "range" }, "resolution": { "const": "resolved" } } }, "then": { "required": ["areas"] } },
+        { "if": { "properties": { "kind": { "const": "external" } } }, "then": { "required": ["external"] } }
+      ]
+    },
+    "dependency": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "dependentEntityId", "before", "after"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "dependentEntityId": { "$ref": "#/$defs/id" },
+        "before": { "anyOf": [{ "type": "null" }, { "$ref": "#/$defs/reference" }] },
+        "after": { "anyOf": [{ "type": "null" }, { "$ref": "#/$defs/reference" }] }
+      }
+    },
+    "environment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "fingerprint"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "fingerprint": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "computation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "side", "inputSha256", "engine", "contextSha256", "artifactSha256", "outputs"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "side": { "enum": ["before", "after"] },
+        "inputSha256": { "$ref": "#/$defs/sha256" },
+        "engine": {
+          "type": "object", "additionalProperties": false,
+          "required": ["name", "version"],
+          "properties": { "name": { "type": "string", "minLength": 1 }, "version": { "type": "string", "minLength": 1 } }
+        },
+        "contextSha256": { "$ref": "#/$defs/sha256" },
+        "artifactSha256": { "$ref": "#/$defs/sha256" },
+        "environment": { "type": "array", "items": { "$ref": "#/$defs/environment" } },
+        "outputs": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["entityId", "property", "value"],
+            "properties": { "entityId": { "$ref": "#/$defs/id" }, "property": { "$ref": "#/$defs/property" }, "value": { "$ref": "#/$defs/value" } },
+            "allOf": [{ "$ref": "#/$defs/typedProperty" }]
+          }
+        }
+      }
+    },
+    "cause": {
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["kind", "dependencyId", "dependencyIds"],
+          "properties": { "kind": { "const": "dependency" }, "dependencyId": { "$ref": "#/$defs/id" }, "dependencyIds": { "$ref": "#/$defs/ids" } }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["kind", "changeId", "dependencyIds"],
+          "properties": { "kind": { "const": "change" }, "changeId": { "$ref": "#/$defs/id" }, "dependencyIds": { "$ref": "#/$defs/ids" } }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["kind", "name", "before", "after"],
+          "properties": { "kind": { "const": "environment" }, "name": { "type": "string", "minLength": 1 }, "before": { "$ref": "#/$defs/value" }, "after": { "$ref": "#/$defs/value" } }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["kind", "detail"],
+          "properties": { "kind": { "const": "unresolved" }, "detail": { "type": "string", "minLength": 1 } }
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["level", "method", "detail", "computationIds"],
+      "properties": {
+        "level": { "enum": ["potential", "supported", "verified"] },
+        "method": { "enum": ["staticAnalysis", "snapshotComparison", "executionTrace", "controlledReplay", "structuralComparison"] },
+        "detail": { "type": "string", "minLength": 1 },
+        "computationIds": { "$ref": "#/$defs/ids" },
+        "artifactSha256": { "$ref": "#/$defs/sha256" }
+      },
+      "allOf": [
+        { "if": { "properties": { "level": { "const": "verified" } } }, "then": { "required": ["artifactSha256"], "properties": { "method": { "const": "controlledReplay" } } } }
+      ]
+    },
+    "impact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "mechanism", "entityId", "property", "outcome", "changeIds", "causes", "evidence"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "mechanism": { "$ref": "#/$defs/mechanism" },
+        "entityId": { "$ref": "#/$defs/id" },
+        "property": { "$ref": "#/$defs/property" },
+        "outcome": { "enum": ["changed", "unchanged", "unknown"] },
+        "changeIds": { "$ref": "#/$defs/ids" },
+        "causes": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/cause" } },
+        "evidence": { "$ref": "#/$defs/evidence" }
+      }
+    },
+    "lineage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "beforeEntityIds", "afterEntityIds", "detail"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["split", "merge"] },
+        "beforeEntityIds": { "$ref": "#/$defs/nonemptyIds" },
+        "afterEntityIds": { "$ref": "#/$defs/nonemptyIds" },
+        "detail": { "type": "string", "minLength": 1 }
+      }
+    },
+    "coverage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "issues"],
+      "properties": {
+        "status": { "enum": ["complete", "partial", "notRequested"] },
+        "issues": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["code", "detail", "entityIds"],
+            "properties": {
+              "code": { "enum": ["unsupportedReference", "unresolvedReference", "unavailableResult", "staleCache", "externalUnavailable", "unverifiedCause", "unresolvedMatch", "truncatedContent"] },
+              "detail": { "type": "string", "minLength": 1 },
+              "entityIds": { "$ref": "#/$defs/ids" }
+            }
+          }
+        }
+      },
+      "allOf": [
+        { "if": { "properties": { "status": { "const": "partial" } } }, "then": { "properties": { "issues": { "minItems": 1 } } }, "else": { "properties": { "issues": { "maxItems": 0 } } } }
+      ]
+    }
+  }
+}

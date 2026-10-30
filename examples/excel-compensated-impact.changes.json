@@ -1,0 +1,466 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "excel-compensated-impact",
+  "format": "xlsx",
+  "documents": {
+    "before": {
+      "name": "synthetic-old.xlsx",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "after": {
+      "name": "synthetic-new.xlsx",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  "comparison": {
+    "profile": "office-semantic-v1",
+    "aspects": [
+      "existence",
+      "value",
+      "formula",
+      "style"
+    ],
+    "compareCachedFormulaValues": true
+  },
+  "coverage": {
+    "status": "complete",
+    "issues": []
+  },
+  "changes": [
+    {
+      "id": "change-A5",
+      "operation": "update",
+      "aspect": "value",
+      "target": {
+        "entityId": "A5",
+        "kind": "cell",
+        "label": "A5"
+      },
+      "property": "/value",
+      "before": {
+        "value": {
+          "type": "number",
+          "data": "10"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "A5"
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "number",
+          "data": "20"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "A5"
+          }
+        }
+      },
+      "match": {
+        "method": "manual",
+        "confidence": 1,
+        "evidence": [
+          "Synthetic example identity; no Office file is supplied."
+        ]
+      }
+    },
+    {
+      "id": "change-A6",
+      "operation": "update",
+      "aspect": "value",
+      "target": {
+        "entityId": "A6",
+        "kind": "cell",
+        "label": "A6"
+      },
+      "property": "/value",
+      "before": {
+        "value": {
+          "type": "number",
+          "data": "20"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "A6"
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "number",
+          "data": "10"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "A6"
+          }
+        }
+      },
+      "match": {
+        "method": "manual",
+        "confidence": 1,
+        "evidence": [
+          "Synthetic example identity; no Office file is supplied."
+        ]
+      }
+    }
+  ],
+  "extensions": {
+    "ppt2wiki.impact": {
+      "version": "1.0.0",
+      "scope": {
+        "entityIds": [
+          "sheet",
+          "A5",
+          "A6",
+          "B1"
+        ],
+        "mechanisms": [
+          "formula"
+        ]
+      },
+      "entities": [
+        {
+          "entityId": "sheet",
+          "kind": "sheet",
+          "label": "sheet",
+          "before": {
+            "source": {
+              "part": "/xl/worksheets/sheet1.xml",
+              "locator": {
+                "type": "excel",
+                "sheetId": 1
+              }
+            },
+            "observations": []
+          },
+          "after": {
+            "source": {
+              "part": "/xl/worksheets/sheet1.xml",
+              "locator": {
+                "type": "excel",
+                "sheetId": 1
+              }
+            },
+            "observations": []
+          }
+        },
+        {
+          "entityId": "A5",
+          "kind": "cell",
+          "label": "A5",
+          "before": {
+            "source": {
+              "part": "/xl/worksheets/sheet1.xml",
+              "locator": {
+                "type": "excel",
+                "sheetId": 1,
+                "address": "A5"
+              }
+            },
+            "observations": [
+              {
+                "property": "/value",
+                "status": "known",
+                "origin": "literal",
+                "freshness": "notApplicable",
+                "value": {
+                  "type": "number",
+                  "data": "10"
+                }
+              }
+            ]
+          },
+          "after": {
+            "source": {
+              "part": "/xl/worksheets/sheet1.xml",
+              "locator": {
+                "type": "excel",
+                "sheetId": 1,
+                "address": "A5"
+              }
+            },
+            "observations": [
+              {
+                "property": "/value",
+                "status": "known",
+                "origin": "literal",
+                "freshness": "notApplicable",
+                "value": {
+                  "type": "number",
+                  "data": "20"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "entityId": "A6",
+          "kind": "cell",
+          "label": "A6",
+          "before": {
+            "source": {
+              "part": "/xl/worksheets/sheet1.xml",
+              "locator": {
+                "type": "excel",
+                "sheetId": 1,
+                "address": "A6"
+              }
+            },
+            "observations": [
+              {
+                "property": "/value",
+                "status": "known",
+                "origin": "literal",
+                "freshness": "notApplicable",
+                "value": {
+                  "type": "number",
+                  "data": "20"
+                }
+              }
+            ]
+          },
+          "after": {
+            "source": {
+              "part": "/xl/worksheets/sheet1.xml",
+              "locator": {
+                "type": "excel",
+                "sheetId": 1,
+                "address": "A6"
+              }
+            },
+            "observations": [
+              {
+                "property": "/value",
+                "status": "known",
+                "origin": "literal",
+                "freshness": "notApplicable",
+                "value": {
+                  "type": "number",
+                  "data": "10"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "entityId": "B1",
+          "kind": "cell",
+          "label": "B1",
+          "before": {
+            "source": {
+              "part": "/xl/worksheets/sheet1.xml",
+              "locator": {
+                "type": "excel",
+                "sheetId": 1,
+                "address": "B1"
+              }
+            },
+            "observations": [
+              {
+                "property": "/value",
+                "status": "known",
+                "origin": "storedCache",
+                "freshness": "verified",
+                "value": {
+                  "type": "number",
+                  "data": "100"
+                },
+                "computationId": "before-calc"
+              }
+            ],
+            "formula": "SUM(A1:A10)"
+          },
+          "after": {
+            "source": {
+              "part": "/xl/worksheets/sheet1.xml",
+              "locator": {
+                "type": "excel",
+                "sheetId": 1,
+                "address": "B1"
+              }
+            },
+            "observations": [
+              {
+                "property": "/value",
+                "status": "known",
+                "origin": "storedCache",
+                "freshness": "verified",
+                "value": {
+                  "type": "number",
+                  "data": "100"
+                },
+                "computationId": "after-calc"
+              }
+            ],
+            "formula": "SUM(A1:A10)"
+          }
+        }
+      ],
+      "dependencies": [
+        {
+          "id": "range-to-B",
+          "dependentEntityId": "B1",
+          "before": {
+            "kind": "range",
+            "expression": "A1:A10",
+            "resolution": "resolved",
+            "members": [
+              "A5",
+              "A6"
+            ],
+            "areas": [
+              {
+                "sheetEntityId": "sheet",
+                "start": "A1",
+                "end": "A10"
+              }
+            ]
+          },
+          "after": {
+            "kind": "range",
+            "expression": "A1:A10",
+            "resolution": "resolved",
+            "members": [
+              "A5",
+              "A6"
+            ],
+            "areas": [
+              {
+                "sheetEntityId": "sheet",
+                "start": "A1",
+                "end": "A10"
+              }
+            ]
+          }
+        }
+      ],
+      "computations": [
+        {
+          "id": "before-calc",
+          "side": "before",
+          "inputSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "engine": {
+            "name": "SYNTHETIC EXAMPLE",
+            "version": "0"
+          },
+          "contextSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "artifactSha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "environment": [],
+          "outputs": [
+            {
+              "entityId": "B1",
+              "property": "/value",
+              "value": {
+                "type": "number",
+                "data": "100"
+              }
+            }
+          ]
+        },
+        {
+          "id": "after-calc",
+          "side": "after",
+          "inputSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "engine": {
+            "name": "SYNTHETIC EXAMPLE",
+            "version": "0"
+          },
+          "contextSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "artifactSha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "environment": [],
+          "outputs": [
+            {
+              "entityId": "B1",
+              "property": "/value",
+              "value": {
+                "type": "number",
+                "data": "100"
+              }
+            }
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "id": "impact-B",
+          "mechanism": "formula",
+          "entityId": "B1",
+          "property": "/value",
+          "outcome": "unchanged",
+          "changeIds": [],
+          "causes": [
+            {
+              "kind": "change",
+              "changeId": "change-A5",
+              "dependencyIds": [
+                "range-to-B"
+              ]
+            },
+            {
+              "kind": "change",
+              "changeId": "change-A6",
+              "dependencyIds": [
+                "range-to-B"
+              ]
+            }
+          ],
+          "evidence": {
+            "level": "verified",
+            "method": "controlledReplay",
+            "detail": "ILLUSTRATIVE: both changed inputs participate, but their effects cancel; no B value update is emitted.",
+            "computationIds": [
+              "before-calc",
+              "after-calc"
+            ],
+            "artifactSha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+          }
+        }
+      ],
+      "lineages": [],
+      "coverage": {
+        "dependencies": {
+          "status": "complete",
+          "issues": []
+        },
+        "attribution": {
+          "status": "complete",
+          "issues": []
+        },
+        "computation": {
+          "status": "complete",
+          "issues": []
+        },
+        "structure": {
+          "status": "notRequested",
+          "issues": []
+        }
+      },
+      "delivery": {
+        "status": "complete",
+        "omitted": {
+          "entities": 0,
+          "dependencies": 0,
+          "computations": 0,
+          "impacts": 0,
+          "lineages": 0
+        }
+      }
+    }
+  }
+}

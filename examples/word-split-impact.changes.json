@@ -1,0 +1,235 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "word-split-impact",
+  "format": "docx",
+  "documents": {
+    "before": {
+      "name": "synthetic-old.docx",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "after": {
+      "name": "synthetic-new.docx",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  "comparison": {
+    "profile": "office-semantic-v1",
+    "aspects": [
+      "existence",
+      "text"
+    ]
+  },
+  "coverage": {
+    "status": "complete",
+    "issues": []
+  },
+  "changes": [
+    {
+      "id": "change-paragraph-old",
+      "operation": "remove",
+      "aspect": "existence",
+      "property": "",
+      "target": {
+        "entityId": "paragraph-old",
+        "kind": "paragraph",
+        "label": "paragraph-old"
+      },
+      "before": {
+        "source": {
+          "part": "/word/document.xml",
+          "locator": {
+            "type": "word",
+            "elementPath": [
+              0,
+              0
+            ]
+          }
+        },
+        "value": {
+          "type": "object",
+          "data": {
+            "text": "甲乙"
+          }
+        }
+      },
+      "after": null
+    },
+    {
+      "id": "change-paragraph-new-1",
+      "operation": "add",
+      "aspect": "existence",
+      "property": "",
+      "target": {
+        "entityId": "paragraph-new-1",
+        "kind": "paragraph",
+        "label": "paragraph-new-1"
+      },
+      "before": null,
+      "after": {
+        "source": {
+          "part": "/word/document.xml",
+          "locator": {
+            "type": "word",
+            "elementPath": [
+              0,
+              0
+            ]
+          }
+        },
+        "value": {
+          "type": "object",
+          "data": {
+            "text": "甲"
+          }
+        }
+      }
+    },
+    {
+      "id": "change-paragraph-new-2",
+      "operation": "add",
+      "aspect": "existence",
+      "property": "",
+      "target": {
+        "entityId": "paragraph-new-2",
+        "kind": "paragraph",
+        "label": "paragraph-new-2"
+      },
+      "before": null,
+      "after": {
+        "source": {
+          "part": "/word/document.xml",
+          "locator": {
+            "type": "word",
+            "elementPath": [
+              0,
+              1
+            ]
+          }
+        },
+        "value": {
+          "type": "object",
+          "data": {
+            "text": "乙"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "ppt2wiki.impact": {
+      "version": "1.0.0",
+      "scope": {
+        "entityIds": [
+          "paragraph-old",
+          "paragraph-new-1",
+          "paragraph-new-2"
+        ],
+        "mechanisms": []
+      },
+      "entities": [
+        {
+          "entityId": "paragraph-old",
+          "kind": "paragraph",
+          "label": "paragraph-old",
+          "before": {
+            "source": {
+              "part": "/word/document.xml",
+              "locator": {
+                "type": "word",
+                "elementPath": [
+                  0,
+                  0
+                ]
+              }
+            },
+            "observations": []
+          },
+          "after": null
+        },
+        {
+          "entityId": "paragraph-new-1",
+          "kind": "paragraph",
+          "label": "paragraph-new-1",
+          "before": null,
+          "after": {
+            "source": {
+              "part": "/word/document.xml",
+              "locator": {
+                "type": "word",
+                "elementPath": [
+                  0,
+                  0
+                ]
+              }
+            },
+            "observations": []
+          }
+        },
+        {
+          "entityId": "paragraph-new-2",
+          "kind": "paragraph",
+          "label": "paragraph-new-2",
+          "before": null,
+          "after": {
+            "source": {
+              "part": "/word/document.xml",
+              "locator": {
+                "type": "word",
+                "elementPath": [
+                  0,
+                  1
+                ]
+              }
+            },
+            "observations": []
+          }
+        }
+      ],
+      "dependencies": [],
+      "computations": [],
+      "impacts": [],
+      "lineages": [
+        {
+          "id": "split-paragraph",
+          "kind": "split",
+          "beforeEntityIds": [
+            "paragraph-old"
+          ],
+          "afterEntityIds": [
+            "paragraph-new-1",
+            "paragraph-new-2"
+          ],
+          "detail": "Synthetic structural correspondence, not a recovered edit history; three core existence events belong to one split."
+        }
+      ],
+      "coverage": {
+        "dependencies": {
+          "status": "notRequested",
+          "issues": []
+        },
+        "attribution": {
+          "status": "notRequested",
+          "issues": []
+        },
+        "computation": {
+          "status": "notRequested",
+          "issues": []
+        },
+        "structure": {
+          "status": "complete",
+          "issues": []
+        }
+      },
+      "delivery": {
+        "status": "complete",
+        "omitted": {
+          "entities": 0,
+          "dependencies": 0,
+          "computations": 0,
+          "impacts": 0,
+          "lineages": 0
+        }
+      }
+    }
+  }
+}

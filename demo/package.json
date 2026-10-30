@@ -1,0 +1,21 @@
+{
+  "name": "office-diff-lab",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "test": "node --test tools/*.test.mjs",
+    "test:characters": "node --test tools/text-diff-view.test.mjs",
+    "dev": "node serve.mjs"
+  },
+  "dependencies": {
+    "fflate": "0.8.2",
+    "pdf-lib": "1.17.1",
+    "pdfjs-dist": "6.4.299"
+  },
+  "devDependencies": {
+    "@napi-rs/canvas": "1.0.11",
+    "@xmldom/xmldom": "^0.9.8",
+    "wabt": "1.0.37"
+  }
+}

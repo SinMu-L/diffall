@@ -1,0 +1,51 @@
+.impact-summary{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin:-8px 0 16px;padding:11px 14px;border:1px solid #e1deed;border-radius:7px;background:#f8f7fc;font-size:11px;color:#5f6178}
+.impact-summary strong{color:#61508e;font-variant-numeric:tabular-nums}
+.impact-summary button{color:#745995;text-decoration:underline;text-underline-offset:3px;font-size:11px;padding:3px}
+.impact-summary small{margin-left:auto;font-size:10px;color:#9092a2}
+.fx-symbol{font:600 12px/1.4 Georgia,serif;color:#74549d;border-radius:4px;background:#eeE8f7;padding:2px 5px;flex-shrink:0}
+.impact-tabs{display:flex;margin:0 13px 10px;border-bottom:1px solid #e5e7ed;gap:14px}
+.impact-tabs>button{font-size:11px;padding:8px 1px;color:#8a95a3;border-bottom:2px solid transparent}
+.impact-tabs>button[aria-selected=true]{border-color:#8868ac;color:#71558d;font-weight:600}
+.impact-tabs span{font-size:9px;padding:1px 4px;background:#f1edf6;border-radius:3px}
+.impact-outcomes{display:flex;flex-wrap:wrap;gap:4px;padding:0 12px 10px}.impact-outcomes button{font-size:10px;padding:5px 7px;border-radius:4px;color:#8e859b;background:#f5f2f8}.impact-outcomes button[aria-pressed=true]{background:#e9e0f2;color:#6d4b8d}
+.change-filters{flex-wrap:wrap}.change-filters button{min-width:32px;white-space:nowrap}
+.change-tag.calculation{background:#f0eaf7;color:#755095}
+.change-tag.uncertain{background:#fff5df;color:#9a742d}
+.impact-caveat{display:block;color:#9b8caa;font-size:9px;margin-top:7px}
+.impact-limitations{margin:0 12px 10px;padding:8px 9px;border:1px solid #eadfc5;border-radius:5px;background:#fffaf0;color:#8a754e;font-size:10px;line-height:1.7}
+.impact-limitations>summary{cursor:pointer;font-weight:500}.impact-limitations>p{margin:7px 0}.impact-limitations>ul{margin:0;padding-left:16px;max-height:140px;overflow:auto}
+.impact-limitations[hidden]{display:none}
+.change-values .observed-value{color:#8a8f9c;font-weight:400}
+.unchanged-impacts>summary{font-size:10px;color:#89949f;padding:12px 8px;cursor:pointer}
+.anchor-inspector{max-height:460px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.impact-inspector{margin-bottom:15px;padding-bottom:14px;border-bottom:1px solid #e7e9ee;font-size:11px;color:#637787}
+.impact-inspector h3{display:flex;align-items:center;gap:7px;font-size:12px;color:#66517c;margin:0 0 12px;line-height:1.6}
+.observation-label{font-size:10px;color:#93a0aa}
+.impact-values{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:16px;font-weight:600;margin:6px 0 13px;font-variant-numeric:tabular-nums;color:#486577;overflow-wrap:anywhere}
+.impact-values .value-arrow{font-size:12px;color:#a5aab4;font-weight:400}
+.formula-context{padding:9px;background:#f5f6f9;border:1px solid #e6e9ee;border-radius:5px;line-height:1.7}
+.formula-context>span{display:block;color:#8492a0;font-size:10px;margin-bottom:4px}
+.formula-context code{font-size:11px;overflow-wrap:anywhere;white-space:pre-wrap;display:block}
+.impact-evidence{font-size:10px;color:#9c8252;line-height:1.8;margin:9px 0}
+.impact-inspector h4{font-size:11px;font-weight:600;margin:15px 0 8px;color:#61768a}
+.impact-link{display:block;max-width:100%;text-align:left;color:#715490;font-size:11px;line-height:1.8;overflow-wrap:anywhere;text-decoration:underline;text-underline-offset:3px;padding:3px 0}
+.impact-link:hover{color:#4c2c70}.impact-link:focus-visible,.range-button:focus-visible,.impact-tabs button:focus-visible{outline:2px solid #a28aba;outline-offset:2px}
+.impact-source{padding:6px 0 9px;border-bottom:1px dashed #e4e6ec}
+.impact-source>.change-values{font-size:11px}.impact-source>small{display:block;color:#9ba5af;font-size:10px;line-height:1.7;margin-top:4px;overflow-wrap:anywhere}
+.impact-source>strong{font-size:11px;font-weight:500}
+.impact-causes>p,.impact-note{font-size:10px;color:#929ba5;line-height:1.8;margin:8px 0 0}
+.range-button{font-size:10px;color:#77598d;padding:7px 10px;background:#f6f2fa;border:1px solid #e3d9ed;border-radius:5px;margin-top:10px}
+.range-button[aria-pressed=true]{background:#ebe1f5;border-color:#b6a0cd}
+.impact-downstream details>summary{font-size:10px;color:#8995a1;cursor:pointer;padding-top:6px}
+.excel-table td.has-impact{position:relative;padding-right:28px}
+.cell-impact-badge{position:absolute;right:5px;top:5px;font:600 10px/16px Georgia,serif;color:#795297;background:#f0e8f8;border:1px solid #dfd0ed;border-radius:4px;min-width:18px;text-align:center;padding:0 2px;pointer-events:none}
+.cell-impact-badge.pending{font-family:inherit;color:#a27935;background:#fff8e8;border-color:#ead7ac}
+.excel-table td.impact-unknown{outline:1px dashed #d3b87e;outline-offset:-4px}
+.excel-table td.impact-unchanged{outline:1px solid #c7cbd4;outline-offset:-4px}
+.excel-table td.reference-area{background-image:linear-gradient(#8d6aad0b,#8d6aad0b);outline:1px solid #b6a1ce;outline-offset:-1px}
+.excel-table td.selected{box-shadow:inset 0 0 0 2px #4d8ec6;outline:none}
+.reference-range-note{margin-top:8px;font-size:10px;line-height:1.7;color:#806095;overflow-wrap:anywhere}
+.reference-range-note button{font-size:10px;text-decoration:underline;margin-left:6px}
+.impact-summary[hidden],.impact-tabs[hidden],.change-filters[hidden],.impact-outcomes[hidden]{display:none}
+@media(max-width:1200px){.impact-summary small{margin-left:0}.anchor-inspector{max-height:400px}}
+@media(max-width:700px){.impact-summary{font-size:10px;margin-top:-3px;gap:7px}.impact-summary small{width:100%}.anchor-inspector{max-height:440px}.impact-tabs{margin-top:1px}.impact-inspector{font-size:12px}}

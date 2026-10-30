@@ -1,0 +1,57 @@
+/* Keep both document versions in their own scrollable reading area. */
+.preview-view{min-height:0;max-height:none;overflow:visible}
+.preview-columns{align-items:start;flex:0 0 auto}
+.preview-surface{height:clamp(300px,48vh,540px);min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#b7c8d2 #edf2f5;scrollbar-gutter:stable;border:1px solid #dfe6eb;border-radius:4px;background:#fff}
+.preview-surface:focus-visible{outline:2px solid #5d9d89;outline-offset:2px}
+.preview-surface>.word-sheet{border:0;box-shadow:none;min-height:100%}
+.preview-surface>.preview-placeholder{min-height:100%;border:0}
+.preview-navigation{display:flex;align-items:center;gap:12px;padding:10px 17px;border-bottom:1px solid #e1e8ed;background:#f8fafc;min-width:0}
+.change-navigation{display:flex;align-items:center;gap:9px;white-space:nowrap;font-size:10px;color:#577083}
+.change-navigation button,.sheet-pager button{display:inline-grid;place-items:center;width:25px;height:25px;background:#fff;border:1px solid #dce5eb;border-radius:5px;font-size:17px;line-height:1}
+.change-navigation button:disabled,.sheet-pager button:disabled{cursor:default;opacity:.35}
+.current-change-location{font-size:10px;color:#667e90;overflow-wrap:anywhere;min-width:0;line-height:1.6}
+.sheet-review-controls{padding:12px 17px;background:#fff;border-bottom:1px solid #e2e9ee}
+.sheet-review-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11px;color:#778c9b}
+.sheet-review-heading strong{font-size:15px;color:#2c7359}
+.sheet-mode{display:flex;border:1px solid #dce6e1;border-radius:6px;padding:2px;background:#f6f9f7;flex-shrink:0}
+.sheet-mode button{font-size:10px;padding:6px 10px;border-radius:4px;color:#7a8f83}
+.sheet-mode button[aria-pressed=true]{background:#fff;color:#207654;font-weight:600;box-shadow:0 1px 4px #27483a12}
+.sheet-chips{display:flex;gap:7px;margin-top:10px;overflow-x:auto;padding:2px 1px 5px;scrollbar-width:thin}
+.sheet-chips button{display:flex;align-items:center;gap:10px;font-size:10px;border:1px solid #e1e8ec;border-radius:5px;padding:6px 9px;white-space:nowrap;background:#fbfcfd;color:#768b99}
+.sheet-chips button[aria-pressed=true]{border-color:#8ebfa8;background:#f0f8f3;color:#277753}
+.sheet-chips button>span{border-radius:4px;background:#e9efed;font-size:9px;padding:1px 5px}
+.sheet-tools{padding:10px;border:1px solid #dfe6eb;border-bottom:0;background:#fafcfb;border-radius:5px 5px 0 0}
+.sheet-location{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:10px;line-height:1.6;margin-bottom:8px;color:#58816d}
+.sheet-location strong{color:#365e4c;overflow-wrap:anywhere;min-width:0}
+.sheet-location>span{text-align:right;overflow-wrap:anywhere}
+.missing-location>span{color:#a07844}
+.sheet-pagination{display:flex;gap:7px;flex-wrap:wrap;justify-content:space-between}
+.sheet-pager{display:flex;align-items:center;gap:5px;font-size:9px;color:#8a9ba8;font-variant-numeric:tabular-nums}
+.sheet-pager>span:first-child{margin-right:3px}
+.sheet-pager button{width:21px;height:22px;font-size:15px}
+.sheet-context-note{font-size:9px;color:#92a398;line-height:1.6;margin-top:7px}
+.spreadsheet-surface{border-radius:0 0 4px 4px;scroll-padding:32px 45px}
+.excel-table{width:max-content;min-width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0;font-size:11px}
+.excel-table .sheet-row-number{width:42px}
+.excel-table .sheet-data-column{width:150px}
+.excel-table .sheet-gap-column{width:70px}
+.excel-table th,.excel-table td{border:0;border-right:1px solid #e5ebef;border-bottom:1px solid #e5ebef;height:36px;padding:7px 10px;max-width:150px}
+.excel-table th:first-child{width:42px;min-width:42px;position:sticky;left:0;z-index:2;background:#f4f7f9}
+.excel-table thead th{position:sticky;top:0;z-index:3;height:28px;min-width:70px;font-size:10px;color:#7c8f9e;background:#edf3f5;box-shadow:0 1px #dbe5eb}
+.excel-table thead th:first-child{z-index:4;min-width:42px}
+.excel-table td{min-width:150px}
+.excel-table td.changed-cell{white-space:normal;overflow-wrap:anywhere;line-height:1.7;text-overflow:clip}
+.excel-table td.selected{box-shadow:inset 0 0 0 2px #4d8ec6;background:#edf5ff;z-index:1}
+.excel-table td.header-cell.selected{background:#2c5d50}
+.sheet-formula{display:block;margin-top:4px;font:10px/1.7 Consolas,monospace;color:#6e8192;white-space:normal;overflow-wrap:anywhere;text-align:left}
+.excel-table td.sheet-gap-cell{min-width:70px;color:#a5b6bd;text-align:center;background:#f7fafb;padding:4px}
+.sheet-gap-row td{background:#f7fafb;text-align:left;padding:5px 10px;height:31px;max-width:none;overflow:visible}
+.sheet-gap-content{position:sticky;left:52px;display:inline-flex;align-items:center;gap:9px;max-width:calc(100vw - 100px)}
+.sheet-gap-content>span{font-size:9px;color:#a0afb7}
+.sheet-expand{font-size:10px;color:#558377;border:1px dashed #c8dcd3;border-radius:4px;padding:4px 7px;background:#f5faf7;white-space:nowrap}
+.sheet-expand:hover{background:#e8f4ed;border-color:#8dbba5}
+.excel-table thead .sheet-expand{font-size:9px;padding:2px 4px}
+.preview-footnote{flex-shrink:0}
+.change-list{overscroll-behavior:contain}
+@media(max-width:1000px){.preview-navigation{align-items:flex-start;flex-wrap:wrap}.current-change-location{width:100%}.after-side{margin-top:8px}}
+@media(max-width:700px){.preview-columns{grid-template-columns:minmax(0,1fr);padding:14px 12px}.after-side{margin-top:8px}.preview-surface{height:340px}.sheet-review-controls{padding:11px 12px}.preview-navigation{padding:9px 12px}.sheet-review-heading{font-size:10px}.sheet-mode button{padding:5px 7px}.sheet-gap-content>span{display:none}}

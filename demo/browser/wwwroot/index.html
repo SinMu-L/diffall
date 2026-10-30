@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="在浏览器中对比 Word、Excel、PowerPoint 和 PDF，查看新旧文件与高亮差异。">
+  <meta name="theme-color" content="#142539">
+  <base href="/">
+  <title>Office Diff · 文件对比</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%23279776'/%3E%3Cpath d='M11 12h11v17H11zm7-3h11v17H18' fill='none' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="character-diff.css">
+  <link rel="stylesheet" href="review.css">
+  <link rel="stylesheet" href="impact.css">
+  <link rel="stylesheet" href="pdf-review.css">
+  <link rel="stylesheet" href="change-colors.css">
+</head>
+<body>
+<div class="app-shell">
+  <main>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Office Diff 首页"><span class="brand-symbol"><i></i><i></i></span><span>Office Diff</span></a>
+      <h1 class="page-title">文件对比</h1>
+      <div id="engine-status" class="engine-status" role="status"><span class="status-dot loading"></span><span>正在准备</span></div>
+      <a class="help-link" href="help.html">示例与帮助</a>
+    </header>
+    <div class="main-content">
+      <section class="file-input-row" aria-label="选择要比较的文件">
+        <div class="file-box" id="file-box-before"><span class="file-version">旧版</span><span id="old-file-icon" class="file-icon neutral">−</span><div class="file-info"><strong id="old-name">选择原始文件</strong><small id="old-size">也可拖入 .docx / .xlsx / .pptx / .pdf</small></div><button class="file-replace" id="replace-old" aria-label="选择旧版文件">选择文件<span data-icon="upload"></span></button><input type="file" id="old-input" accept=".pptx,.xlsx,.docx,.pdf" hidden></div>
+        <button class="swap-button" id="swap-files" aria-label="交换新旧文件" title="交换新旧文件" disabled><span data-icon="swap"></span></button>
+        <div class="file-box" id="file-box-after"><span class="file-version">新版</span><span id="new-file-icon" class="file-icon neutral">+</span><div class="file-info"><strong id="new-name">选择修订文件</strong><small id="new-size">选择与旧版相同格式的文件</small></div><button class="file-replace" id="replace-new" aria-label="选择新版文件">选择文件<span data-icon="upload"></span></button><input type="file" id="new-input" accept=".pptx,.xlsx,.docx,.pdf" hidden></div>
+        <button class="button compare-button" id="compare" disabled><span data-icon="compare"></span>开始对比</button>
+      </section>
+      <section id="processing" class="processing" aria-label="处理进度" hidden>
+        <div class="processing-heading"><strong id="processing-status" role="status" aria-live="polite">正在准备对比…</strong><span id="processing-count"></span></div>
+        <progress id="processing-bar" aria-label="当前阶段处理中"></progress>
+        <ol class="processing-steps"><li data-stage="before">解析旧版</li><li data-stage="after">解析新版</li><li data-stage="diff">计算差异</li><li data-stage="preview">生成预览</li></ol>
+      </section>
+      <div id="error-message" class="error-message" role="alert" hidden></div>
+      <section id="comparison-empty" class="comparison-empty">
+        <span data-icon="columns"></span><h2 id="empty-title">选择两个版本，查看文件差异</h2><p id="empty-description">支持 Word、Excel、PowerPoint 和 PDF，文件仅在浏览器内处理。</p><a href="help.html#samples">使用示例试一试 →</a>
+      </section>
+      <section id="comparison-stats" class="stats" aria-label="差异统计" hidden>
+        <span class="stats-total">共 <strong id="stat-total">—</strong> 处变化</span><span>内容 <strong id="stat-content">—</strong></span><span>样式与布局 <strong id="stat-layout">—</strong></span><span>增删 <strong id="stat-existence">—</strong></span>
+        <button id="toggle-changes" class="text-button" aria-expanded="true" aria-controls="changes-panel">收起变更列表</button>
+      </section>
+      <section id="workbench" class="workbench" aria-label="文件对比结果" aria-busy="false" hidden>
+        <div class="document-area">
+          <div class="document-toolbar">
+            <button id="tab-preview" class="preview-tab active" data-view="preview" aria-pressed="true"><span data-icon="columns"></span>原文对照</button><span id="active-view-label" class="active-view-label" hidden></span>
+            <div class="toolbar-actions"><label class="highlight-toggle"><input id="show-highlights" type="checkbox" checked><span></span>差异高亮</label>
+              <details id="more-tools" class="more-tools"><summary>更多<span data-icon="chevron"></span></summary><div class="more-menu">
+                <button id="tab-structure" data-view="structure" aria-pressed="false">结构视图</button><button id="tab-json" data-view="json" aria-pressed="false">查看 Change JSON</button><button id="export-json" disabled>导出 ChangeSet</button>
+                <a id="download-old" href="#" download>下载原始文件</a><a id="download-new" href="#" download>下载修订文件</a>
+                <div id="impact-summary" class="impact-summary" hidden></div>
+                <details class="coverage-details"><summary>本次比较范围</summary><div id="coverage-text"></div></details><a href="help.html#protocol">协议说明</a>
+              </div></details>
+            </div>
+          </div>
+          <div class="page-controls"><span id="format-label"></span><label><span id="page-select-label">页面</span><select id="page-select" aria-label="选择页面"></select></label><div class="legend" aria-label="变更类型颜色"><span class="legend-type" data-change-group="content">内容</span><span class="legend-type" data-change-group="layout">布局</span><span class="legend-type" data-change-group="existence">增删</span></div></div>
+          <div id="preview-view" class="preview-view">
+            <div id="sheet-review-controls" class="sheet-review-controls" hidden></div>
+            <div id="preview-navigation" class="preview-navigation" aria-live="polite"></div>
+            <div class="preview-columns">
+              <section class="preview-side before-side"><div class="preview-label"><span>原始版本</span><span id="old-page-label"></span></div><div id="before-sheet-tools" class="sheet-tools" hidden></div><div id="before-preview" class="preview-surface" tabindex="0" role="region" aria-label="原始版本原文，可滚动"></div></section>
+              <section class="preview-side after-side"><div class="preview-label"><span>修订版本</span><span id="new-page-label"></span></div><div id="after-sheet-tools" class="sheet-tools" hidden></div><div id="after-preview" class="preview-surface" tabindex="0" role="region" aria-label="修订版本原文，可滚动"></div></section>
+            </div>
+            <div class="preview-footnote"><span data-icon="info"></span><span id="preview-kind">结构化预览</span> · <a href="help.html#coverage">查看比较范围</a><span id="timing"></span></div>
+          </div>
+          <div id="structure-view" class="structure-view" hidden></div>
+          <div id="json-view" class="json-view" hidden><div class="code-toolbar"><span id="json-filename">office-change.v1.json</span><button class="text-button" id="copy-json"><span data-icon="copy"></span>复制 JSON</button></div><pre id="json-code"></pre></div>
+          <div class="export-bar"><span id="export-description">下载含差异标记的 Office 文件</span><div><button class="button button-small" id="export-before" disabled><span data-icon="download"></span>高亮旧版</button><button class="button button-small button-green" id="export-after" disabled><span data-icon="download"></span>高亮新版</button></div></div>
+        </div>
+        <aside id="changes-panel" class="changes-panel" aria-label="变更列表"><div class="changes-heading"><div>变更明细 <span id="changes-count">0</span></div></div><div id="impact-tabs" class="impact-tabs" hidden role="tablist" aria-label="明细类型"><button data-panel="changes" role="tab" aria-selected="true">实际变化</button><button data-panel="impacts" role="tab" aria-selected="false">计算影响 <span id="impact-count">0</span></button></div><div id="impact-outcomes" class="impact-outcomes" hidden aria-label="计算影响状态"></div>
+          <details id="impact-limitations" class="impact-limitations" hidden><summary>分析限制 · <span id="impact-limitations-count">0</span> 个公式</summary><p>部分公式引用未完整解析，可能存在尚未识别的关联。仅有解析限制、没有发现变化关联的单元格不计入计算影响。</p><ul id="impact-limitations-list"></ul></details>
+          <div class="change-filters" aria-label="筛选变化"><button class="active" data-filter="all">全部</button><button data-filter="content">内容</button><button data-filter="calculation" id="calculation-filter" hidden>计算结果</button><button data-filter="layout">布局</button><button data-filter="existence">增删</button></div><div id="change-list" class="change-list" aria-live="polite"></div><details class="change-details"><summary>变化详情与定位</summary><div class="anchor-inspector" id="anchor-inspector"></div></details></aside>
+      </section>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

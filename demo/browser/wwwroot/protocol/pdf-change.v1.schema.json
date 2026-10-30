@@ -1,0 +1,1121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ppt2wiki:pdf-change:1",
+  "title": "PDF ChangeSet v1",
+  "description": "Snapshot-bound PDF text, style, geometry and page observations; not an executable patch.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "format",
+    "documents",
+    "comparison",
+    "coverage",
+    "changes"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "format": {
+      "const": "pdf"
+    },
+    "documents": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "before",
+        "after"
+      ],
+      "properties": {
+        "before": {
+          "$ref": "#/$defs/document"
+        },
+        "after": {
+          "$ref": "#/$defs/document"
+        }
+      }
+    },
+    "comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "aspects"
+      ],
+      "properties": {
+        "profile": {
+          "const": "pdf-text-v1"
+        },
+        "aspects": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/aspect"
+          }
+        },
+        "geometryTolerancePt": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "coverage": {
+      "$ref": "#/$defs/coverage"
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/change"
+      }
+    },
+    "extensions": {
+      "$ref": "#/$defs/extensions"
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "part": {
+      "type": "string",
+      "pattern": "^/[^?#\\s\\\\]+$"
+    },
+    "document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sha256",
+        "name"
+      ],
+      "properties": {
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "aspect": {
+      "enum": [
+        "existence",
+        "text",
+        "value",
+        "formula",
+        "style",
+        "geometry",
+        "order",
+        "parent",
+        "media",
+        "metadata"
+      ]
+    },
+    "change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "operation",
+        "aspect",
+        "target",
+        "property",
+        "before",
+        "after"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "operation": {
+          "enum": [
+            "add",
+            "remove",
+            "update",
+            "move"
+          ]
+        },
+        "aspect": {
+          "$ref": "#/$defs/aspect"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "property": {
+          "type": "string",
+          "description": "RFC 6901 pointer into the target's canonical semantic object, not the source XML or the Change envelope.",
+          "pattern": "^(?:/(?:[^~/]|~[01])*)*$"
+        },
+        "before": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/state"
+            }
+          ]
+        },
+        "after": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/state"
+            }
+          ]
+        },
+        "match": {
+          "$ref": "#/$defs/match"
+        },
+        "groupId": {
+          "$ref": "#/$defs/id"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "add"
+              }
+            },
+            "required": [
+              "operation"
+            ]
+          },
+          "then": {
+            "properties": {
+              "aspect": {
+                "const": "existence"
+              },
+              "property": {
+                "const": ""
+              },
+              "before": {
+                "type": "null"
+              },
+              "after": {
+                "$ref": "#/$defs/objectState"
+              }
+            },
+            "not": {
+              "required": [
+                "match"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "remove"
+              }
+            },
+            "required": [
+              "operation"
+            ]
+          },
+          "then": {
+            "properties": {
+              "aspect": {
+                "const": "existence"
+              },
+              "property": {
+                "const": ""
+              },
+              "before": {
+                "$ref": "#/$defs/objectState"
+              },
+              "after": {
+                "type": "null"
+              }
+            },
+            "not": {
+              "required": [
+                "match"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "update"
+              }
+            },
+            "required": [
+              "operation"
+            ]
+          },
+          "then": {
+            "required": [
+              "match"
+            ],
+            "properties": {
+              "aspect": {
+                "enum": [
+                  "text",
+                  "value",
+                  "formula",
+                  "style",
+                  "geometry",
+                  "media",
+                  "metadata"
+                ]
+              },
+              "property": {
+                "minLength": 1
+              },
+              "before": {
+                "$ref": "#/$defs/state"
+              },
+              "after": {
+                "$ref": "#/$defs/state"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "move"
+              }
+            },
+            "required": [
+              "operation"
+            ]
+          },
+          "then": {
+            "required": [
+              "match"
+            ],
+            "properties": {
+              "aspect": {
+                "enum": [
+                  "order",
+                  "parent"
+                ]
+              },
+              "property": {
+                "const": "/placement"
+              },
+              "before": {
+                "$ref": "#/$defs/placementState"
+              },
+              "after": {
+                "$ref": "#/$defs/placementState"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "aspect": {
+                "const": "text"
+              }
+            },
+            "required": [
+              "aspect"
+            ]
+          },
+          "then": {
+            "properties": {
+              "property": {
+                "const": "/text"
+              },
+              "before": {
+                "$ref": "#/$defs/textState"
+              },
+              "after": {
+                "$ref": "#/$defs/textState"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "aspect": {
+                "const": "formula"
+              }
+            },
+            "required": [
+              "aspect"
+            ]
+          },
+          "then": {
+            "properties": {
+              "property": {
+                "const": "/formula"
+              },
+              "before": {
+                "$ref": "#/$defs/formulaState"
+              },
+              "after": {
+                "$ref": "#/$defs/formulaState"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "aspect": {
+                "const": "value"
+              }
+            },
+            "required": [
+              "aspect"
+            ]
+          },
+          "then": {
+            "properties": {
+              "property": {
+                "const": "/value"
+              },
+              "before": {
+                "$ref": "#/$defs/scalarState"
+              },
+              "after": {
+                "$ref": "#/$defs/scalarState"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "aspect": {
+                "const": "style"
+              }
+            },
+            "required": [
+              "aspect"
+            ]
+          },
+          "then": {
+            "properties": {
+              "property": {
+                "pattern": "^/style(?:/|$)"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "aspect": {
+                "const": "geometry"
+              }
+            },
+            "required": [
+              "aspect"
+            ]
+          },
+          "then": {
+            "properties": {
+              "property": {
+                "const": "/geometry"
+              },
+              "before": {
+                "$ref": "#/$defs/geometryState"
+              },
+              "after": {
+                "$ref": "#/$defs/geometryState"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "aspect": {
+                "const": "media"
+              }
+            },
+            "required": [
+              "aspect"
+            ]
+          },
+          "then": {
+            "properties": {
+              "property": {
+                "const": "/asset"
+              },
+              "before": {
+                "$ref": "#/$defs/assetState"
+              },
+              "after": {
+                "$ref": "#/$defs/assetState"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "aspect": {
+                "const": "metadata"
+              }
+            },
+            "required": [
+              "aspect"
+            ]
+          },
+          "then": {
+            "properties": {
+              "property": {
+                "pattern": "^/metadata(?:/|$)"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entityId",
+        "kind",
+        "label"
+      ],
+      "properties": {
+        "entityId": {
+          "$ref": "#/$defs/id",
+          "description": "Identity scoped to this ChangeSet; native shape IDs and cell addresses are not entity IDs."
+        },
+        "kind": {
+          "enum": [
+            "page",
+            "textRange"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subtype": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "source"
+      ],
+      "properties": {
+        "value": {
+          "$ref": "#/$defs/value"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        }
+      }
+    },
+    "textState": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/state"
+        },
+        {
+          "properties": {
+            "value": {
+              "properties": {
+                "type": {
+                  "const": "text"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "formulaState": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/state"
+        },
+        {
+          "properties": {
+            "value": {
+              "properties": {
+                "type": {
+                  "enum": [
+                    "text",
+                    "null"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "scalarState": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/state"
+        },
+        {
+          "properties": {
+            "value": {
+              "properties": {
+                "type": {
+                  "enum": [
+                    "text",
+                    "number",
+                    "boolean",
+                    "null",
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "objectState": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/state"
+        },
+        {
+          "properties": {
+            "value": {
+              "properties": {
+                "type": {
+                  "const": "object"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "assetState": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/state"
+        },
+        {
+          "properties": {
+            "value": {
+              "properties": {
+                "type": {
+                  "const": "asset"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "geometryState": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/objectState"
+        },
+        {
+          "properties": {
+            "value": {
+              "properties": {
+                "data": {
+                  "$ref": "#/$defs/geometry"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "placementState": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/objectState"
+        },
+        {
+          "properties": {
+            "value": {
+              "properties": {
+                "data": {
+                  "$ref": "#/$defs/placement"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "value": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "data"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "text",
+            "number",
+            "boolean",
+            "null",
+            "error",
+            "object",
+            "array",
+            "asset"
+          ]
+        },
+        "data": true
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "text",
+                  "error"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "number"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "type": "string",
+                "pattern": "^-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "boolean"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "object"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "array"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "type": "array"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "asset"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "$ref": "#/$defs/asset"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "geometry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "unit",
+        "space",
+        "x",
+        "y",
+        "width",
+        "height",
+        "rotation"
+      ],
+      "properties": {
+        "unit": {
+          "const": "pt"
+        },
+        "space": {
+          "const": "pageViewport"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "height": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "rotation": {
+          "type": "number"
+        }
+      }
+    },
+    "placement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "parentEntityId",
+        "index"
+      ],
+      "properties": {
+        "parentEntityId": {
+          "$ref": "#/$defs/id"
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sha256",
+        "mediaType",
+        "part"
+      ],
+      "properties": {
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "mediaType": {
+          "type": "string",
+          "minLength": 1
+        },
+        "part": {
+          "$ref": "#/$defs/part"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "locator"
+      ],
+      "properties": {
+        "locator": {
+          "$ref": "#/$defs/pdfLocator"
+        }
+      }
+    },
+    "textRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "length",
+        "unit"
+      ],
+      "properties": {
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unit": {
+          "const": "utf16"
+        }
+      }
+    },
+    "match": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "confidence",
+        "evidence"
+      ],
+      "properties": {
+        "method": {
+          "enum": [
+            "nativeId",
+            "structure",
+            "content",
+            "composite",
+            "manual"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "issues"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "complete",
+            "partial"
+          ]
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/coverageIssue"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "issues": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "partial"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "issues": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "coverageIssue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "side",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "enum": [
+            "unsupportedFeature",
+            "opaqueContent",
+            "unresolvedStyle",
+            "ambiguousMatch",
+            "unresolvedAnchor",
+            "truncatedContent"
+          ]
+        },
+        "side": {
+          "enum": [
+            "before",
+            "after",
+            "both"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aspect": {
+          "$ref": "#/$defs/aspect"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        }
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[A-Za-z][A-Za-z0-9_-]*(?:\\.[A-Za-z][A-Za-z0-9_-]*)+$"
+      },
+      "additionalProperties": true,
+      "description": "Namespaced optional metadata, such as ppt2wiki.review. Must not override core semantics."
+    },
+    "pdfLocator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "pageIndex",
+        "coordinateSpace",
+        "rect"
+      ],
+      "properties": {
+        "type": {
+          "const": "pdf"
+        },
+        "pageIndex": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "coordinateSpace": {
+          "const": "pageViewport"
+        },
+        "rect": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          ],
+          "items": false,
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "itemIndices": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "text": {
+          "type": "string"
+        },
+        "range": {
+          "$ref": "#/$defs/textRange"
+        }
+      }
+    }
+  }
+}

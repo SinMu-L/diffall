@@ -1,0 +1,752 @@
+{
+  "word-budget": [
+    {
+      "operation": "update",
+      "aspect": "text",
+      "property": "/text",
+      "before": {
+        "value": {
+          "type": "text",
+          "data": "研发部 Q2 预算由 100 万元调整为 120 万元。"
+        },
+        "source": {
+          "part": "/word/document.xml",
+          "locator": {
+            "type": "word",
+            "elementPath": [
+              0,
+              4
+            ]
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "text",
+          "data": "研发部 Q3 预算由 100 万元调整为 150 万元。"
+        },
+        "source": {
+          "part": "/word/document.xml",
+          "locator": {
+            "type": "word",
+            "elementPath": [
+              0,
+              4
+            ]
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "aspect": "style",
+      "property": "/style/font/bold",
+      "before": {
+        "value": {
+          "type": "boolean",
+          "data": false
+        },
+        "source": {
+          "part": "/word/document.xml",
+          "locator": {
+            "type": "word",
+            "elementPath": [
+              0,
+              4
+            ]
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "boolean",
+          "data": true
+        },
+        "source": {
+          "part": "/word/document.xml",
+          "locator": {
+            "type": "word",
+            "elementPath": [
+              0,
+              4
+            ]
+          }
+        }
+      }
+    },
+    {
+      "operation": "add",
+      "aspect": "existence",
+      "property": "",
+      "before": null,
+      "after": {
+        "value": {
+          "type": "object",
+          "data": {
+            "kind": "paragraph",
+            "text": "新增预算于 2026 年 11 月起执行，由财务部统一跟踪。",
+            "scalar": null
+          }
+        },
+        "source": {
+          "part": "/word/document.xml",
+          "locator": {
+            "type": "word",
+            "elementPath": [
+              0,
+              6
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "excel-budget": [
+    {
+      "operation": "update",
+      "aspect": "value",
+      "property": "/value",
+      "before": {
+        "value": {
+          "type": "number",
+          "data": "1200000"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "C2"
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "number",
+          "data": "1500000"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "C3"
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "aspect": "style",
+      "property": "/style/font/bold",
+      "before": {
+        "value": {
+          "type": "boolean",
+          "data": false
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "C2"
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "boolean",
+          "data": true
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "C3"
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "aspect": "style",
+      "property": "/style/font/color",
+      "before": {
+        "value": {
+          "type": "text",
+          "data": "243B53"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "C2"
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "text",
+          "data": "208961"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "C3"
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "aspect": "value",
+      "property": "/value",
+      "before": {
+        "value": { "type": "number", "data": "2200000" },
+        "source": { "part": "/xl/worksheets/sheet1.xml", "locator": { "type": "excel", "sheetId": 1, "address": "D2" } }
+      },
+      "after": {
+        "value": { "type": "number", "data": "2625000" },
+        "source": { "part": "/xl/worksheets/sheet1.xml", "locator": { "type": "excel", "sheetId": 1, "address": "D3" } }
+      }
+    },
+    {
+      "operation": "update",
+      "aspect": "formula",
+      "property": "/formula",
+      "before": {
+        "value": {
+          "type": "text",
+          "data": "SUM(B2:C2)"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "D2"
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "text",
+          "data": "SUM(B3:C3)*1.05"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "D3"
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "aspect": "value",
+      "property": "/value",
+      "before": {
+        "value": {
+          "type": "text",
+          "data": "李明"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "E2"
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "text",
+          "data": "李敏"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "E3"
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "aspect": "formula",
+      "property": "/formula",
+      "before": {
+        "value": {
+          "type": "text",
+          "data": "SUM(B3:C3)"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "D3"
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "text",
+          "data": "SUM(B4:C4)"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "D4"
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "aspect": "formula",
+      "property": "/formula",
+      "before": {
+        "value": {
+          "type": "text",
+          "data": "SUM(B4:C4)"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "D4"
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "text",
+          "data": "SUM(B5:C5)"
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "D5"
+          }
+        }
+      }
+    },
+    {
+      "operation": "add",
+      "aspect": "existence",
+      "property": "",
+      "before": null,
+      "after": {
+        "value": {
+          "type": "object",
+          "data": {
+            "kind": "cell",
+            "text": null,
+            "scalar": {
+              "type": "text",
+              "data": "数据部"
+            }
+          }
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "A2"
+          }
+        }
+      }
+    },
+    {
+      "operation": "add",
+      "aspect": "existence",
+      "property": "",
+      "before": null,
+      "after": {
+        "value": {
+          "type": "object",
+          "data": {
+            "kind": "cell",
+            "text": null,
+            "scalar": {
+              "type": "number",
+              "data": "300000"
+            }
+          }
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "B2"
+          }
+        }
+      }
+    },
+    {
+      "operation": "add",
+      "aspect": "existence",
+      "property": "",
+      "before": null,
+      "after": {
+        "value": {
+          "type": "object",
+          "data": {
+            "kind": "cell",
+            "text": null,
+            "scalar": {
+              "type": "number",
+              "data": "400000"
+            }
+          }
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "C2"
+          }
+        }
+      }
+    },
+    {
+      "operation": "add",
+      "aspect": "existence",
+      "property": "",
+      "before": null,
+      "after": {
+        "value": {
+          "type": "object",
+          "data": {
+            "kind": "cell",
+            "text": null,
+            "scalar": {
+              "type": "null",
+              "data": null
+            }
+          }
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "D2"
+          }
+        }
+      }
+    },
+    {
+      "operation": "add",
+      "aspect": "existence",
+      "property": "",
+      "before": null,
+      "after": {
+        "value": {
+          "type": "object",
+          "data": {
+            "kind": "cell",
+            "text": null,
+            "scalar": {
+              "type": "text",
+              "data": "周宁"
+            }
+          }
+        },
+        "source": {
+          "part": "/xl/worksheets/sheet1.xml",
+          "locator": {
+            "type": "excel",
+            "sheetId": 1,
+            "address": "E2"
+          }
+        }
+      }
+    }
+  ],
+  "ppt-budget": [
+    {
+      "operation": "update",
+      "aspect": "text",
+      "property": "/text",
+      "before": {
+        "value": {
+          "type": "text",
+          "data": "研发预算\n120 万元"
+        },
+        "source": {
+          "part": "/ppt/slides/slide1.xml",
+          "locator": {
+            "type": "powerpoint",
+            "slideId": 256,
+            "shapePath": [
+              5
+            ]
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "text",
+          "data": "研发预算\n150 万元"
+        },
+        "source": {
+          "part": "/ppt/slides/slide1.xml",
+          "locator": {
+            "type": "powerpoint",
+            "slideId": 256,
+            "shapePath": [
+              5
+            ]
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "aspect": "geometry",
+      "property": "/geometry",
+      "before": {
+        "value": {
+          "type": "object",
+          "data": {
+            "unit": "emu",
+            "space": "slide",
+            "x": 666750,
+            "y": 2171700,
+            "width": 4762500,
+            "height": 952500,
+            "rotation": 0,
+            "flipH": false,
+            "flipV": false
+          }
+        },
+        "source": {
+          "part": "/ppt/slides/slide1.xml",
+          "locator": {
+            "type": "powerpoint",
+            "slideId": 256,
+            "shapePath": [
+              5
+            ]
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "object",
+          "data": {
+            "unit": "emu",
+            "space": "slide",
+            "x": 952500,
+            "y": 2171700,
+            "width": 4762500,
+            "height": 952500,
+            "rotation": 0,
+            "flipH": false,
+            "flipV": false
+          }
+        },
+        "source": {
+          "part": "/ppt/slides/slide1.xml",
+          "locator": {
+            "type": "powerpoint",
+            "slideId": 256,
+            "shapePath": [
+              5
+            ]
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "aspect": "text",
+      "property": "/text",
+      "before": {
+        "value": {
+          "type": "text",
+          "data": "较上一季度稳步增长，优先保障项目交付。"
+        },
+        "source": {
+          "part": "/ppt/slides/slide1.xml",
+          "locator": {
+            "type": "powerpoint",
+            "slideId": 256,
+            "shapePath": [
+              6
+            ]
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "text",
+          "data": "新增预算用于核心平台建设与研发交付。"
+        },
+        "source": {
+          "part": "/ppt/slides/slide1.xml",
+          "locator": {
+            "type": "powerpoint",
+            "slideId": 256,
+            "shapePath": [
+              6
+            ]
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "aspect": "text",
+      "property": "/text",
+      "before": {
+        "value": {
+          "type": "text",
+          "data": "120万"
+        },
+        "source": {
+          "part": "/ppt/slides/slide1.xml",
+          "locator": {
+            "type": "powerpoint",
+            "slideId": 256,
+            "shapePath": [
+              8
+            ],
+            "cell": {
+              "row": 1,
+              "column": 2
+            }
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "text",
+          "data": "150万"
+        },
+        "source": {
+          "part": "/ppt/slides/slide1.xml",
+          "locator": {
+            "type": "powerpoint",
+            "slideId": 256,
+            "shapePath": [
+              8
+            ],
+            "cell": {
+              "row": 1,
+              "column": 2
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "move",
+      "aspect": "order",
+      "property": "/placement",
+      "before": {
+        "value": {
+          "type": "object",
+          "data": {
+            "parentEntityId": "document",
+            "index": 0
+          }
+        },
+        "source": {
+          "part": "/ppt/slides/slide1.xml",
+          "locator": {
+            "type": "powerpoint",
+            "slideId": 256
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "object",
+          "data": {
+            "parentEntityId": "document",
+            "index": 1
+          }
+        },
+        "source": {
+          "part": "/ppt/slides/slide1.xml",
+          "locator": {
+            "type": "powerpoint",
+            "slideId": 256
+          }
+        }
+      }
+    },
+    {
+      "operation": "remove",
+      "aspect": "existence",
+      "property": "",
+      "before": {
+        "value": {
+          "type": "object",
+          "data": {
+            "kind": "shape",
+            "text": "待审批",
+            "scalar": null
+          }
+        },
+        "source": {
+          "part": "/ppt/slides/slide1.xml",
+          "locator": {
+            "type": "powerpoint",
+            "slideId": 256,
+            "shapePath": [
+              12
+            ]
+          }
+        }
+      },
+      "after": null
+    },
+    {
+      "operation": "add",
+      "aspect": "existence",
+      "property": "",
+      "before": null,
+      "after": {
+        "value": {
+          "type": "object",
+          "data": {
+            "kind": "shape",
+            "text": "2026.11 起执行",
+            "scalar": null
+          }
+        },
+        "source": {
+          "part": "/ppt/slides/slide1.xml",
+          "locator": {
+            "type": "powerpoint",
+            "slideId": 256,
+            "shapePath": [
+              17
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

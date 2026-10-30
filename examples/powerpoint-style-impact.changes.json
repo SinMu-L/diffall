@@ -1,0 +1,280 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "powerpoint-style-impact",
+  "format": "pptx",
+  "documents": {
+    "before": {
+      "name": "synthetic-old.pptx",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "after": {
+      "name": "synthetic-new.pptx",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  "comparison": {
+    "profile": "office-semantic-v1",
+    "aspects": [
+      "style"
+    ]
+  },
+  "coverage": {
+    "status": "complete",
+    "issues": []
+  },
+  "changes": [
+    {
+      "id": "theme-color",
+      "operation": "update",
+      "aspect": "style",
+      "target": {
+        "entityId": "theme",
+        "kind": "other",
+        "label": "主题"
+      },
+      "property": "/style/font/color",
+      "before": {
+        "value": {
+          "type": "text",
+          "data": "18293D"
+        },
+        "source": {
+          "part": "/ppt/theme/theme1.xml",
+          "locator": {
+            "type": "xml",
+            "elementPath": []
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "text",
+          "data": "245AC1"
+        },
+        "source": {
+          "part": "/ppt/theme/theme1.xml",
+          "locator": {
+            "type": "xml",
+            "elementPath": []
+          }
+        }
+      },
+      "match": {
+        "method": "manual",
+        "confidence": 1,
+        "evidence": [
+          "Synthetic example identity; no Office file is supplied."
+        ]
+      }
+    },
+    {
+      "id": "shape-color",
+      "operation": "update",
+      "aspect": "style",
+      "target": {
+        "entityId": "shape",
+        "kind": "shape",
+        "label": "标题"
+      },
+      "property": "/style/font/color",
+      "before": {
+        "value": {
+          "type": "text",
+          "data": "18293D"
+        },
+        "source": {
+          "part": "/ppt/slides/slide1.xml",
+          "locator": {
+            "type": "powerpoint",
+            "slideId": 256,
+            "shapePath": [
+              2
+            ]
+          }
+        }
+      },
+      "after": {
+        "value": {
+          "type": "text",
+          "data": "245AC1"
+        },
+        "source": {
+          "part": "/ppt/slides/slide1.xml",
+          "locator": {
+            "type": "powerpoint",
+            "slideId": 256,
+            "shapePath": [
+              2
+            ]
+          }
+        }
+      },
+      "match": {
+        "method": "manual",
+        "confidence": 1,
+        "evidence": [
+          "Synthetic example identity; no Office file is supplied."
+        ]
+      }
+    }
+  ],
+  "extensions": {
+    "ppt2wiki.impact": {
+      "version": "1.0.0",
+      "scope": {
+        "entityIds": [
+          "theme",
+          "shape"
+        ],
+        "mechanisms": [
+          "styleInheritance"
+        ]
+      },
+      "entities": [
+        {
+          "entityId": "theme",
+          "kind": "other",
+          "label": "主题",
+          "before": {
+            "source": {
+              "part": "/ppt/theme/theme1.xml",
+              "locator": {
+                "type": "xml",
+                "elementPath": []
+              }
+            },
+            "observations": []
+          },
+          "after": {
+            "source": {
+              "part": "/ppt/theme/theme1.xml",
+              "locator": {
+                "type": "xml",
+                "elementPath": []
+              }
+            },
+            "observations": []
+          }
+        },
+        {
+          "entityId": "shape",
+          "kind": "shape",
+          "label": "标题",
+          "before": {
+            "source": {
+              "part": "/ppt/slides/slide1.xml",
+              "locator": {
+                "type": "powerpoint",
+                "slideId": 256,
+                "shapePath": [
+                  2
+                ]
+              }
+            },
+            "observations": []
+          },
+          "after": {
+            "source": {
+              "part": "/ppt/slides/slide1.xml",
+              "locator": {
+                "type": "powerpoint",
+                "slideId": 256,
+                "shapePath": [
+                  2
+                ]
+              }
+            },
+            "observations": []
+          }
+        }
+      ],
+      "dependencies": [
+        {
+          "id": "theme-to-shape",
+          "dependentEntityId": "shape",
+          "before": {
+            "kind": "object",
+            "expression": "theme accent color",
+            "resolution": "resolved",
+            "members": [
+              "theme"
+            ]
+          },
+          "after": {
+            "kind": "object",
+            "expression": "theme accent color",
+            "resolution": "resolved",
+            "members": [
+              "theme"
+            ]
+          }
+        }
+      ],
+      "computations": [],
+      "impacts": [
+        {
+          "id": "impact-shape",
+          "mechanism": "styleInheritance",
+          "entityId": "shape",
+          "property": "/style/font/color",
+          "outcome": "changed",
+          "changeIds": [
+            "shape-color"
+          ],
+          "causes": [
+            {
+              "kind": "change",
+              "changeId": "theme-color",
+              "dependencyIds": [
+                "theme-to-shape"
+              ]
+            }
+          ],
+          "evidence": {
+            "level": "supported",
+            "method": "snapshotComparison",
+            "detail": "Resolved effective style differs; no controlled replay has been supplied.",
+            "computationIds": []
+          }
+        }
+      ],
+      "lineages": [],
+      "coverage": {
+        "dependencies": {
+          "status": "complete",
+          "issues": []
+        },
+        "attribution": {
+          "status": "partial",
+          "issues": [
+            {
+              "code": "unverifiedCause",
+              "detail": "Synthetic coverage example.",
+              "entityIds": [
+                "shape"
+              ]
+            }
+          ]
+        },
+        "computation": {
+          "status": "notRequested",
+          "issues": []
+        },
+        "structure": {
+          "status": "notRequested",
+          "issues": []
+        }
+      },
+      "delivery": {
+        "status": "complete",
+        "omitted": {
+          "entities": 0,
+          "dependencies": 0,
+          "computations": 0,
+          "impacts": 0,
+          "lineages": 0
+        }
+      }
+    }
+  }
+}

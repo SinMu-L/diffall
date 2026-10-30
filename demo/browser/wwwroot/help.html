@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Office Diff 示例、使用说明与比较范围。">
+  <title>示例与帮助 · Office Diff</title>
+  <link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="pdf-review.css">
+</head>
+<body>
+<div class="app-shell help-page">
+  <main>
+    <header class="topbar"><a class="brand" href="./"><span class="brand-symbol"><i></i><i></i></span><span>Office Diff</span></a><span class="page-title">示例与帮助</span><a class="help-link back-link" href="./">返回文件对比 →</a></header>
+    <div class="help-content">
+      <section id="samples">
+        <h1>从示例开始</h1><p>选择一组文件，直接查看新旧版本与差异。</p>
+        <div class="help-samples"><a class="help-sample" href="./?sample=pdf-budget"><span class="file-icon pdf">PDF</span><div><h2>PDF 预算审阅</h2><p>PDF · 文字、混合样式、位置与页面增删、调序</p></div><span aria-hidden="true">→</span></a>
+          <a class="help-sample" href="./?sample=ppt-budget"><span class="file-icon ppt">P</span><div><h2>预算汇报修订</h2><p>PowerPoint · 文字、表格、位置与页序</p></div><span aria-hidden="true">→</span></a>
+          <a class="help-sample" href="./?sample=excel-budget"><span class="file-icon excel">X</span><div><h2>部门预算调整</h2><p>Excel · 数值、公式与新增部门</p></div><span aria-hidden="true">→</span></a>
+          <a class="help-sample" href="./?sample=excel-formulas"><span class="file-icon excel">ƒx</span><div><h2>公式与连锁变化</h2><p>Excel · 结果变化、引用范围与跨表影响</p></div><span aria-hidden="true">→</span></a>
+          <a class="help-sample" href="./?sample=word-budget"><span class="file-icon word">W</span><div><h2>预算说明修订</h2><p>Word · 文字、样式与新增段落</p></div><span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+      <section id="usage">
+        <h2>如何对比</h2>
+        <ol class="help-instructions"><li>在旧版和新版区域选择或拖入文件，两个文件需要使用相同格式，每个文件最大 15 MB。</li><li>点击“开始对比”，等待文件解析、差异计算与预览生成。</li><li>并排查看文件，点击变更列表或上一处／下一处定位修改；需要更大阅读空间时可收起变更列表。</li><li>点击“高亮旧版”或“高亮新版”下载带标记的 Office 或 PDF 副本；原始文件、结构和 JSON 可在“更多”中查看。</li></ol>
+        <p>支持 .docx、.xlsx、.pptx、.pdf。PDF 最多 150 页，扫描件 OCR 尚未接入。文件仅在浏览器内处理，不会上传。受密码保护的文件需要先解密。</p>
+      </section>
+      <section id="coverage">
+        <h2>比较与展示范围</h2><p>页面使用结构化内容预览，不能完整还原 Office 排版。未比较的内容可能仍有差异，完整排版请使用 Office 查看下载的文件。本次文件的具体范围也可在结果的“更多”中查看。</p>
+        <dl class="help-coverage"><dt>PDF</dt><dd>原始页面渲染预览；比较可提取的文字、字体、字号、粗体、斜体、填充颜色、文字位置、页面尺寸与页序。高亮按文字区域标记，明细提供字符差异。图片、图表、线条、背景、批注和扫描件 OCR 未比较；复杂多栏、重排与重复内容匹配可能不完整，无法可靠提取的样式会说明限制。导出通过叠加区域标记保留页面内容。</dd><dt>Word</dt><dd>比较正文段落文字及首个文字片段的粗体、字号、颜色。混合片段样式、页眉页脚、复杂字段、表格结构、主题继承和页面排版未完整比较。</dd><dt>Excel</dt><dd>比较单元格值、普通公式和直接文字样式。合并、共享公式、主题继承、图表及行列结构未完整比较。公式结果按文件保存的缓存值比较；计算影响中的待确认提示不能理解为结果未变。</dd><dt>PowerPoint</dt><dd>比较幻灯片、文字、表格文字、显式位置与尺寸、图片字节及页序。组合坐标变换、母版继承、图表、SmartArt、动画和形状堆叠顺序未完整比较。</dd></dl>
+        <p>高亮下载保留原文件内容并添加差异标记；它不是接受或拒绝修订的操作。</p>
+      </section>
+      <section id="protocol">
+        <h2>协议与技术说明</h2><p>浏览器解析 Office 文件，各格式分别提取内容，使用 WebAssembly 计算字符差异，再生成统一的 ChangeSet。结果绑定各自文件的快照和定位信息。</p>
+        <details class="help-protocol"><summary>查看协议字段</summary><dl class="help-coverage"><dt><code>operation / aspect</code></dt><dd>记录变更操作以及文字、数值、样式等变化类型。</dd><dt><code>before / after</code></dt><dd>记录旧值、新值，以及它们在各自文件中的位置。</dd><dt><code>target.entityId</code></dt><dd>关联匹配到的对象。</dd><dt><code>coverage</code></dt><dd>记录比较范围和未覆盖的功能。</dd></dl></details>
+        <div class="help-downloads"><a class="button" href="protocol/pdf-change.v1.schema.json" download>下载 PDF Change Schema</a><a class="button" href="protocol/office-change.v1.schema.json" download>下载 Change Schema</a><a class="button" href="protocol/office-text-diff.v1.schema.json" download>下载字符差异 Schema</a><a class="button" href="protocol/office-impact.v1.schema.json" download>下载计算影响 Schema</a></div>
+      </section>
+    </div>
+  </main>
+</div>
+</body>
+</html>

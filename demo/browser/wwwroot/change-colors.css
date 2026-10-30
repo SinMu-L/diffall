@@ -1,0 +1,28 @@
+:root{
+  --change-content:#27835d;--change-content-fill:#e2f3e9;--change-content-ink:#216447;
+  --change-layout:#547fb7;--change-layout-fill:#e7effb;--change-layout-ink:#365c8e;
+  --change-existence:#b67a2d;--change-existence-fill:#fff0d9;--change-existence-ink:#8c5b1f;
+}
+[data-change-group=content]{--change-color:var(--change-content);--change-fill:var(--change-content-fill);--change-ink:var(--change-content-ink)}
+[data-change-group=layout]{--change-color:var(--change-layout);--change-fill:var(--change-layout-fill);--change-ink:var(--change-layout-ink)}
+[data-change-group=existence]{--change-color:var(--change-existence);--change-fill:var(--change-existence-fill);--change-ink:var(--change-existence-ink)}
+.change-tag.content{color:var(--change-content-ink);background:var(--change-content-fill)}
+.change-tag.layout{color:var(--change-layout-ink);background:var(--change-layout-fill)}
+.change-tag.existence{color:var(--change-existence-ink);background:var(--change-existence-fill)}
+.legend-type{display:inline-flex;align-items:center;gap:5px}
+.legend-type::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--change-color)}
+.legend-type+.legend-type{margin-left:9px}
+.preview-surface [data-change-group].node-hit{background:var(--change-fill)!important;color:var(--change-ink)!important;border-color:var(--change-color)}
+.preview-surface .char-diff.before,.preview-surface .char-diff.after{background:var(--change-content-fill);color:var(--change-content-ink);text-decoration-color:currentColor;border-bottom-color:var(--change-content)}
+.preview-surface [data-change-group=existence] .char-diff{background:var(--change-existence-fill);color:var(--change-existence-ink);text-decoration-color:currentColor;border-bottom-color:var(--change-existence)}
+.preview-surface .char-caret{border-color:var(--change-content)}
+.preview-surface .word-sheet>p[data-change-group].selected{border-color:var(--change-color)}
+.preview-surface .excel-table td[data-change-group].selected{box-shadow:inset 0 0 0 2px var(--change-color)}
+.preview-surface .excel-table td[data-change-group].node-hit.selected{background:var(--change-fill)}
+.preview-surface [data-change-group]>.hit-zone{fill:var(--change-color);fill-opacity:.12;stroke:var(--change-color)}
+.preview-surface [data-change-group]>.node-selected{stroke:var(--change-color)!important;stroke-dasharray:none}
+.preview-surface .slide-canvas.changed-page{outline:2px dashed var(--change-color);outline-offset:-2px}
+.preview-surface .slide-canvas.changed-page.selected-page{outline:3px solid var(--change-color)}
+.preview-surface .pdf-highlight[data-change-group]{border-color:var(--change-color);background:color-mix(in srgb,var(--change-color) 20%,transparent)}
+.preview-surface .pdf-highlight[data-change-group].selected{outline-color:var(--change-color)}
+.preview-surface .pdf-whole-page[data-change-group]{box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--change-color) 35%,transparent)}

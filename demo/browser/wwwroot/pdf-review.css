@@ -1,0 +1,11 @@
+.file-icon.pdf{color:#a73539;background:#fce9e9}
+.pdf-surface{background:#edf0f2;padding:16px;min-height:420px}
+.pdf-page{position:relative;margin:0 auto;background:#fff;box-shadow:0 2px 12px #15293720;flex:none}
+.pdf-page canvas{display:block;width:100%;height:100%}
+.pdf-highlight{position:absolute;display:block;min-width:3px;min-height:4px;margin:0;padding:0;border:1px solid #ba7817;background:#e5a53635;cursor:pointer;border-radius:2px;z-index:2}
+.pdf-highlight.after{border-color:#238456;background:#40ae7430}
+.pdf-highlight:hover,.pdf-highlight:focus-visible{outline:2px solid #234e7d;outline-offset:2px}
+.pdf-highlight.selected{outline:2px solid #234e7d;outline-offset:3px;box-shadow:0 0 0 5px #fff9}
+.pdf-whole-page{z-index:1;background:transparent!important;box-shadow:inset 0 0 0 3px #e5a53655;border-width:2px}
+.pdf-whole-page.after{box-shadow:inset 0 0 0 3px #40ae7455}
+.pdf-surface .preview-placeholder p{font-size:12px;margin:10px 0}

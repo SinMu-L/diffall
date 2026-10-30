@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "word-budget-example",
+  "format": "docx",
+  "documents": {
+    "before": { "name": "预算说明旧版.docx", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" },
+    "after": { "name": "预算说明新版.docx", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" }
+  },
+  "comparison": { "profile": "office-semantic-v1", "aspects": ["existence", "text", "style"] },
+  "coverage": { "status": "complete", "issues": [] },
+  "changes": [
+    {
+      "id": "word-001",
+      "operation": "update",
+      "aspect": "text",
+      "target": { "entityId": "budget-text", "kind": "textRange", "label": "研发预算说明中的金额" },
+      "property": "/text",
+      "before": {
+        "value": { "type": "text", "data": "120万" },
+        "source": { "part": "/word/document.xml", "locator": { "type": "word", "elementPath": [0, 2], "range": { "start": 5, "length": 4, "unit": "utf16" } } }
+      },
+      "after": {
+        "value": { "type": "text", "data": "150万" },
+        "source": { "part": "/word/document.xml", "locator": { "type": "word", "elementPath": [0, 3], "range": { "start": 5, "length": 4, "unit": "utf16" } } }
+      },
+      "match": { "method": "composite", "confidence": 0.99, "evidence": ["段落上下文一致", "金额前后文字一致"] }
+    },
+    {
+      "id": "word-002",
+      "operation": "update",
+      "aspect": "style",
+      "target": { "entityId": "budget-text", "kind": "textRange", "label": "研发预算说明中的金额" },
+      "property": "/style/font/bold",
+      "before": {
+        "value": { "type": "boolean", "data": false },
+        "source": { "part": "/word/document.xml", "locator": { "type": "word", "elementPath": [0, 2], "range": { "start": 5, "length": 4, "unit": "utf16" } } }
+      },
+      "after": {
+        "value": { "type": "boolean", "data": true },
+        "source": { "part": "/word/document.xml", "locator": { "type": "word", "elementPath": [0, 3], "range": { "start": 5, "length": 4, "unit": "utf16" } } }
+      },
+      "match": { "method": "composite", "confidence": 0.99, "evidence": ["复用金额文字范围的匹配结果"] }
+    },
+    {
+      "id": "word-003",
+      "operation": "add",
+      "aspect": "existence",
+      "target": { "entityId": "budget-note", "kind": "paragraph", "label": "新增预算执行说明" },
+      "property": "",
+      "before": null,
+      "after": {
+        "value": { "type": "object", "data": { "kind": "paragraph", "text": "预算按季度复核。" } },
+        "source": { "part": "/word/document.xml", "locator": { "type": "word", "elementPath": [0, 5] } }
+      }
+    }
+  ]
+}

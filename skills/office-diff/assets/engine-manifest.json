@@ -1,0 +1,73 @@
+{
+  "skillVersion": "1.0.0",
+  "formats": [
+    "docx",
+    "xlsx",
+    "pptx"
+  ],
+  "engine": "original-js-wasm",
+  "sources": [
+    {
+      "path": "demo/browser/wwwroot/engine/adapters.js",
+      "sha256": "df762295be747114bd2e2c4b8a8c42e9a67b4f58b96d9db0031bd4ddfac697e2"
+    },
+    {
+      "path": "demo/browser/wwwroot/engine/annotation.js",
+      "sha256": "4a4dc910d4e3e96981359d42cd2fe3eed3a45cf4c1630505fc7f7ca7b8a1f9fd"
+    },
+    {
+      "path": "demo/browser/wwwroot/engine/character-diff.js",
+      "sha256": "98155d3788499532c33920a5746e32997e560204ea1ef8e3cca5ac746f6c843a"
+    },
+    {
+      "path": "demo/browser/wwwroot/engine/formula-impact.js",
+      "sha256": "7f192236397b65753b1c9992fd1e46bea703096adc1cdc812e06b0d4e1a67db2"
+    },
+    {
+      "path": "demo/browser/wwwroot/engine/office-engine.js",
+      "sha256": "a6c36c8f503d89e5b1a12d604fbfde06255ec014d8783cf8ae959da16f19b0e5"
+    },
+    {
+      "path": "demo/browser/wwwroot/engine/ooxml.js",
+      "sha256": "7c05433dc7077cc96c0dc560095c28282bb09802bded37b3d3e94272ecf5706f"
+    },
+    {
+      "path": "demo/browser/wwwroot/vendor/fflate.js",
+      "sha256": "8cc1f687e0159e977addb6b85e274dbd11e622cf151f4fcb7b85d49622ea43e7"
+    },
+    {
+      "path": "demo/node_modules/.pnpm/@xmldom+xmldom@0.9.12/node_modules/@xmldom/xmldom/lib/conventions.js",
+      "sha256": "da57fbe2b07f5a4aaee9217b49778936c11a1108da1761b2f24f356a900ff124"
+    },
+    {
+      "path": "demo/node_modules/.pnpm/@xmldom+xmldom@0.9.12/node_modules/@xmldom/xmldom/lib/dom-parser.js",
+      "sha256": "4188e24b953e2c70b66150306c66547495ad968d040e31dd65f22a7b3485da28"
+    },
+    {
+      "path": "demo/node_modules/.pnpm/@xmldom+xmldom@0.9.12/node_modules/@xmldom/xmldom/lib/dom.js",
+      "sha256": "bea9ba89adfec227e9e572ee934a48223a170c5cf96b7087d7e3d3023ac47be3"
+    },
+    {
+      "path": "demo/node_modules/.pnpm/@xmldom+xmldom@0.9.12/node_modules/@xmldom/xmldom/lib/entities.js",
+      "sha256": "ef333b680379392e8ee120e1cc77e0a8ff99a135e3b365b048f69c0df5f571f9"
+    },
+    {
+      "path": "demo/node_modules/.pnpm/@xmldom+xmldom@0.9.12/node_modules/@xmldom/xmldom/lib/errors.js",
+      "sha256": "3e97f9c4f0a189346e2621b29c7c5a3899cd7375d1d15cbfbddd044fb781cb9f"
+    },
+    {
+      "path": "demo/node_modules/.pnpm/@xmldom+xmldom@0.9.12/node_modules/@xmldom/xmldom/lib/grammar.js",
+      "sha256": "144f27b46adfb4a139adeb7483820def568b3940a6893194c03f5a71a94babc0"
+    },
+    {
+      "path": "demo/node_modules/.pnpm/@xmldom+xmldom@0.9.12/node_modules/@xmldom/xmldom/lib/index.js",
+      "sha256": "418c42598a45290498f4350b6b6f531ceeb25e8d4d9a107db2448a1c0b5b784e"
+    },
+    {
+      "path": "demo/node_modules/.pnpm/@xmldom+xmldom@0.9.12/node_modules/@xmldom/xmldom/lib/sax.js",
+      "sha256": "324e8a0c7b475c645efcd1736b634733e133150849bff741fa0e2215e7017d02"
+    }
+  ],
+  "wasmSha256": "aaed21f3a2e9d7e6929a12b9d2d2e3f0e0bc8c302f36aa0b253ca976a1f18899",
+  "bundleSha256": "650d7785882c517cef55e85b4464b09abdfe65431b931439b18bcbfbe85ef0e5"
+}

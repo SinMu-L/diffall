@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "ppt-budget-example",
+  "format": "pptx",
+  "documents": {
+    "before": { "name": "预算汇报旧版.pptx", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" },
+    "after": { "name": "预算汇报新版.pptx", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" }
+  },
+  "comparison": {
+    "profile": "office-semantic-v1",
+    "aspects": ["existence", "text", "value", "geometry", "order", "media"],
+    "geometryToleranceEmu": 0
+  },
+  "coverage": {
+    "status": "partial",
+    "issues": [
+      { "code": "opaqueContent", "side": "both", "aspect": "value", "message": "预算趋势图表只保留了原始资源，本例没有提取和比较图表内部数据。" }
+    ]
+  },
+  "changes": [
+    {
+      "id": "ppt-001",
+      "operation": "update",
+      "aspect": "text",
+      "target": { "entityId": "budget-title", "kind": "shape", "subtype": "textBox", "label": "预算页 / 标题" },
+      "property": "/text",
+      "before": {
+        "value": { "type": "text", "data": "2026年度预算" },
+        "source": { "part": "/ppt/slides/slide3.xml", "locator": { "type": "powerpoint", "slideId": 258, "shapePath": [2] } }
+      },
+      "after": {
+        "value": { "type": "text", "data": "2026年度预算修订" },
+        "source": { "part": "/ppt/slides/slide3.xml", "locator": { "type": "powerpoint", "slideId": 258, "shapePath": [2] } }
+      },
+      "match": { "method": "composite", "confidence": 0.99, "evidence": ["匹配的预算幻灯片", "Shape ID为2且角色均为标题"] }
+    },
+    {
+      "id": "ppt-002",
+      "operation": "update",
+      "aspect": "geometry",
+      "target": { "entityId": "budget-explanation", "kind": "shape", "label": "预算页 / 说明文本框" },
+      "property": "/geometry",
+      "before": {
+        "value": { "type": "object", "data": { "unit": "emu", "space": "slide", "x": 914400, "y": 914400, "width": 3657600, "height": 914400, "rotation": 0, "flipH": false, "flipV": false } },
+        "source": { "part": "/ppt/slides/slide3.xml", "locator": { "type": "powerpoint", "slideId": 258, "shapePath": [5] } }
+      },
+      "after": {
+        "value": { "type": "object", "data": { "unit": "emu", "space": "slide", "x": 1828800, "y": 914400, "width": 3657600, "height": 914400, "rotation": 0, "flipH": false, "flipV": false } },
+        "source": { "part": "/ppt/slides/slide3.xml", "locator": { "type": "powerpoint", "slideId": 258, "shapePath": [5] } }
+      },
+      "match": { "method": "composite", "confidence": 0.99, "evidence": ["Shape ID为5", "说明文字和形状类型相同"] }
+    },
+    {
+      "id": "ppt-003",
+      "operation": "move",
+      "aspect": "order",
+      "target": { "entityId": "budget-slide", "kind": "slide", "label": "预算页从第3页调整到第5页" },
+      "property": "/placement",
+      "before": {
+        "value": { "type": "object", "data": { "parentEntityId": "deck", "index": 2 } },
+        "source": { "part": "/ppt/slides/slide3.xml", "locator": { "type": "powerpoint", "slideId": 258 } }
+      },
+      "after": {
+        "value": { "type": "object", "data": { "parentEntityId": "deck", "index": 4 } },
+        "source": { "part": "/ppt/slides/slide3.xml", "locator": { "type": "powerpoint", "slideId": 258 } }
+      },
+      "match": { "method": "composite", "confidence": 0.99, "evidence": ["幻灯片原生ID为258", "内容与关系目标支持同一页匹配"] }
+    },
+    {
+      "id": "ppt-004",
+      "operation": "remove",
+      "aspect": "existence",
+      "target": { "entityId": "old-warning", "kind": "shape", "label": "预算页 / 已删除的待审批提示" },
+      "property": "",
+      "before": {
+        "value": { "type": "object", "data": { "kind": "shape", "text": "待审批" } },
+        "source": { "part": "/ppt/slides/slide3.xml", "locator": { "type": "powerpoint", "slideId": 258, "shapePath": [12] } }
+      },
+      "after": null
+    },
+    {
+      "id": "ppt-005",
+      "operation": "add",
+      "aspect": "existence",
+      "target": { "entityId": "new-footnote", "kind": "shape", "label": "预算页 / 新增执行日期脚注" },
+      "property": "",
+      "before": null,
+      "after": {
+        "value": { "type": "object", "data": { "kind": "shape", "text": "自2026年11月起执行" } },
+        "source": { "part": "/ppt/slides/slide3.xml", "locator": { "type": "powerpoint", "slideId": 258, "shapePath": [17] } }
+      }
+    },
+    {
+      "id": "ppt-006",
+      "operation": "update",
+      "aspect": "media",
+      "target": { "entityId": "budget-illustration", "kind": "image", "label": "预算页 / 配图" },
+      "property": "/asset",
+      "before": {
+        "value": { "type": "asset", "data": { "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "mediaType": "image/png", "part": "/ppt/media/image1.png" } },
+        "source": { "part": "/ppt/slides/slide3.xml", "locator": { "type": "powerpoint", "slideId": 258, "shapePath": [9] } }
+      },
+      "after": {
+        "value": { "type": "asset", "data": { "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "mediaType": "image/png", "part": "/ppt/media/image4.png" } },
+        "source": { "part": "/ppt/slides/slide3.xml", "locator": { "type": "powerpoint", "slideId": 258, "shapePath": [9] } }
+      },
+      "match": { "method": "composite", "confidence": 0.98, "evidence": ["Shape ID为9", "配图位置与图片对象类型一致"] }
+    },
+    {
+      "id": "ppt-007",
+      "operation": "update",
+      "aspect": "text",
+      "target": { "entityId": "rd-budget-table-cell", "kind": "cell", "label": "预算页 / 表格 / 研发部 / Q2预算" },
+      "property": "/text",
+      "before": {
+        "value": { "type": "text", "data": "120万" },
+        "source": { "part": "/ppt/slides/slide3.xml", "locator": { "type": "powerpoint", "slideId": 258, "shapePath": [8], "cell": { "row": 1, "column": 2 } } }
+      },
+      "after": {
+        "value": { "type": "text", "data": "150万" },
+        "source": { "part": "/ppt/slides/slide3.xml", "locator": { "type": "powerpoint", "slideId": 258, "shapePath": [8], "cell": { "row": 1, "column": 2 } } }
+      },
+      "match": { "method": "composite", "confidence": 0.99, "evidence": ["表格Shape ID为8", "行列标签均匹配"] }
+    }
+  ]
+}
